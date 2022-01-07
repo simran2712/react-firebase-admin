@@ -12,86 +12,86 @@ import {
   updateDocument,
 } from '../api';
 
-export const USERS_FETCH_DATA_INIT = createAction('USERS_FETCH_DATA_INIT');
-export const USERS_FETCH_DATA_SUCCESS = createAction(
-  'USERS_FETCH_DATA_SUCCESS'
+export const SCRIBES_FETCH_DATA_INIT = createAction('SCRIBES_FETCH_DATA_INIT');
+export const SCRIBES_FETCH_DATA_SUCCESS = createAction(
+  'SCRIBES_FETCH_DATA_SUCCESS'
 );
-export const USERS_FETCH_DATA_FAIL = createAction('USERS_FETCH_DATA_FAIL');
+export const SCRIBES_FETCH_DATA_FAIL = createAction('SCRIBES_FETCH_DATA_FAIL');
 
-export const USERS_DELETE_USER_INIT = createAction('USERS_DELETE_USER_INIT');
-export const USERS_DELETE_USER_SUCCESS = createAction(
-  'USERS_DELETE_USER_SUCCESS'
+export const SCRIBES_DELETE_USER_INIT = createAction('SCRIBES_DELETE_USER_INIT');
+export const SCRIBES_DELETE_USER_SUCCESS = createAction(
+  'SCRIBES_DELETE_USER_SUCCESS'
 );
-export const USERS_DELETE_USER_FAIL = createAction('USERS_DELETE_USER_FAIL');
+export const SCRIBES_DELETE_USER_FAIL = createAction('SCRIBES_DELETE_USER_FAIL');
 
-export const USERS_CREATE_USER_INIT = createAction('USERS_CREATE_USER_INIT');
-export const USERS_CREATE_USER_SUCCESS = createAction(
-  'USERS_CREATE_USER_SUCCESS'
+export const SCRIBES_CREATE_USER_INIT = createAction('SCRIBES_CREATE_USER_INIT');
+export const SCRIBES_CREATE_USER_SUCCESS = createAction(
+  'SCRIBES_CREATE_USER_SUCCESS'
 );
-export const USERS_CREATE_USER_FAIL = createAction('USERS_CREATE_USER_FAIL');
+export const SCRIBES_CREATE_USER_FAIL = createAction('SCRIBES_CREATE_USER_FAIL');
 
-export const USERS_MODIFY_USER_INIT = createAction('USERS_MODIFY_USER_INIT');
-export const USERS_MODIFY_USER_SUCCESS = createAction(
-  'USERS_MODIFY_USER_SUCCESS'
+export const SCRIBES_MODIFY_USER_INIT = createAction('SCRIBES_MODIFY_USER_INIT');
+export const SCRIBES_MODIFY_USER_SUCCESS = createAction(
+  'SCRIBES_MODIFY_USER_SUCCESS'
 );
-export const USERS_MODIFY_USER_FAIL = createAction('USERS_MODIFY_USER_FAIL');
+export const SCRIBES_MODIFY_USER_FAIL = createAction('SCRIBES_MODIFY_USER_FAIL');
 
-export const USERS_CLEAN_UP = createAction('USERS_CLEAN_UP');
+export const SCRIBES_CLEAN_UP = createAction('SCRIBES_CLEAN_UP');
 
-export const USERS_CLEAR_DATA_LOGOUT = createAction('USERS_CLEAR_DATA_LOGOUT');
+export const SCRIBES_CLEAR_DATA_LOGOUT = createAction('SCRIBES_CLEAR_DATA_LOGOUT');
 
 export const fetchUsers = (userId = '') => {
   return async (dispatch, getState) => {
     dispatch(checkUserData());
 
-    dispatch(USERS_FETCH_DATA_INIT());
+    dispatch(SCRIBES_FETCH_DATA_INIT());
 
-    if (userId) {
-      let user;
+    if (scribeId) {
+      let scribe;
       try {
 
-        user = await fetchDocument('users', userId);
+        scribe = await fetchDocument('scribes', scribeId);
         
       } catch (error) {
         /* eslint-disable no-console */
-        console.log("error fetching user doc, ", error);
+        console.log("error fetching scribe doc, ", error);
         /* eslint-enable no-console */
-        toastr.error('cant fetch user doc', error);
-        return dispatch(USERS_FETCH_DATA_FAIL({ error }));
+        toastr.error('cant fetch scribe doc', error);
+        return dispatch(SCRIBES_FETCH_DATA_FAIL({ error }));
       }
       
-      if (!user) {
+      if (!scribe) {
         const errorMessage = 'User not available';
-        toastr.error('Cant get the current user', errorMessage);
-        return dispatch(USERS_FETCH_DATA_FAIL({ error: errorMessage }));
+        toastr.error('Cant get the current scribe', errorMessage);
+        return dispatch(SCRIBES_FETCH_DATA_FAIL({ error: errorMessage }));
       }
       
-      const users = getState().users.data;
-      users.push(user);
+      const scribes = getState().scribes.data;
+      scribes.push(scribe);
       
       return dispatch(
-        USERS_FETCH_DATA_SUCCESS({
-          data: users,
+        SCRIBES_FETCH_DATA_SUCCESS({
+          data: scribes,
         })
         );
     }
-    const { id } = getState().auth.userData;
+    const { id } = getState().auth.scribeData;
 
-    let users;
+    let scribes;
 
     try {
-      users = await fetchCollection('users');
+      scribes = await fetchCollection('scribes');
     } catch (error) {
       /* eslint-disable no-console */
-      console.log("error fetching user collec, ", error);
+      console.log("error fetching scribe collec, ", error);
       /* eslint-enable no-console */
-      toastr.error('Cant get the users collection', error);
-      return dispatch(USERS_FETCH_DATA_FAIL({ error }));
+      toastr.error('Cant get the scribes collection', error);
+      return dispatch(SCRIBES_FETCH_DATA_FAIL({ error }));
     }
 
     return dispatch(
-      USERS_FETCH_DATA_SUCCESS({
-        data: users.filter((user) => user.id !== id),
+      SCRIBES_FETCH_DATA_SUCCESS({
+        data: scribes.filter((scribe) => scribe.id !== id),
       })
     );
   };
@@ -101,21 +101,21 @@ const deleteLogo = (oldLogo) => {
   if (!oldLogo.includes('firebasestorage')) {
     return null;
   }
-  const logoPath = oldLogo.split('users%2F').pop().split('?alt=media').shift();
-  return firebase.storage().ref(`users/${logoPath}`).delete();
+  const logoPath = oldLogo.split('scribes%2F').pop().split('?alt=media').shift();
+  return firebase.storage().ref(`scribes/${logoPath}`).delete();
 };
 
 export const deleteUser = (id) => {
   return async (dispatch, getState) => {
-    dispatch(USERS_DELETE_USER_INIT());
+    dispatch(SCRIBES_DELETE_USER_INIT());
     const { locale } = getState().preferences;
     const { logoUrl } = getState()
-      .users.data.filter((user) => user.id === id)
+      .scribes.data.filter((scribe) => scribe.id === id)
       .pop();
 
     const deleteLogoTask = logoUrl ? deleteLogo(logoUrl) : null;
 
-    const deleteUserTask = deleteDocument('users', id);
+    const deleteUserTask = deleteDocument('scribes', id);
 
     try {
       await Promise.all([deleteLogoTask, deleteUserTask]);
@@ -123,20 +123,20 @@ export const deleteUser = (id) => {
       const errorMessage = firebaseError(error.code, locale);
       toastr.error('', errorMessage);
       return dispatch(
-        USERS_DELETE_USER_FAIL({
+        SCRIBES_DELETE_USER_FAIL({
           error: errorMessage,
         })
       );
     }
 
-    toastr.success('', 'The user was deleted.');
-    return dispatch(USERS_DELETE_USER_SUCCESS({ id }));
+    toastr.success('', 'The scribe was deleted.');
+    return dispatch(SCRIBES_DELETE_USER_SUCCESS({ id }));
   };
 };
 
 export const clearUsersDataLogout = () => {
   return (dispatch) => {
-    dispatch(USERS_CLEAR_DATA_LOGOUT());
+    dispatch(SCRIBES_CLEAR_DATA_LOGOUT());
   };
 };
 
@@ -147,7 +147,7 @@ const uploadLogo = (uid, file) => {
 
   const fileName = `${uid}.${fileExtension}`;
 
-  return storageRef.child(`users/${fileName}`).put(file);
+  return storageRef.child(`scribes/${fileName}`).put(file);
 };
 
 const getLogoUrl = (uid, file) => {
@@ -167,7 +167,7 @@ export const createUser = ({
   isAdmin,
 }) => {
   return async (dispatch, getState) => {
-    dispatch(USERS_CREATE_USER_INIT());
+    dispatch(SCRIBES_CREATE_USER_INIT());
     const { locale } = getState().preferences;
 
     let response;
@@ -181,7 +181,7 @@ export const createUser = ({
       const errorMessage = firebaseError(error.message, locale);
       toastr.error('', errorMessage);
       return dispatch(
-        USERS_CREATE_USER_FAIL({
+        SCRIBES_CREATE_USER_FAIL({
           error: errorMessage,
         })
       );
@@ -218,14 +218,14 @@ export const createUser = ({
       const errorMessage = firebaseError(error.code, locale);
       toastr.error('', errorMessage);
       return dispatch(
-        USERS_CREATE_USER_FAIL({
+        SCRIBES_CREATE_USER_FAIL({
           error: errorMessage,
         })
       );
     }
 
     toastr.success('', 'User created successfully');
-    return dispatch(USERS_CREATE_USER_SUCCESS({ user: response.data }));
+    return dispatch(SCRIBES_CREATE_USER_SUCCESS({ user: response.data }));
   };
 };
 
@@ -240,7 +240,7 @@ export const modifyUser = ({
   isProfile,
 }) => {
   return async (dispatch, getState) => {
-    dispatch(USERS_MODIFY_USER_INIT());
+    dispatch(SCRIBES_MODIFY_USER_INIT());
     const { locale } = getState().preferences;
     const user = isProfile
       ? getState().auth.userData
@@ -270,7 +270,7 @@ export const modifyUser = ({
       const errorMessage = firebaseError(error.code, locale);
       toastr.error('', errorMessage);
       return dispatch(
-        USERS_MODIFY_USER_FAIL({
+        SCRIBES_MODIFY_USER_FAIL({
           error: errorMessage,
         })
       );
@@ -288,8 +288,8 @@ export const modifyUser = ({
       toastr.success('', 'User updated successfully');
     }
 
-    return dispatch(USERS_MODIFY_USER_SUCCESS({ user: userData, id }));
+    return dispatch(SCRIBES_MODIFY_USER_SUCCESS({ user: userData, id }));
   };
 };
 
-export const usersCleanUp = () => (dispatch) => dispatch(USERS_CLEAN_UP());
+export const usersCleanUp = () => (dispatch) => dispatch(SCRIBES_CLEAN_UP());

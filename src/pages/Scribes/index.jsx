@@ -6,25 +6,25 @@ import ClipLoader from 'react-spinners/ClipLoader';
 
 import { useFormatMessage, useFormatDate } from 'hooks';
 import Table from 'components/Table';
-import { fetchUsers, deleteUser, usersCleanUp } from 'state/actions/users';
+import { fetchScribes, deleteScribe, ScribesCleanUp } from 'state/actions/Scribes';
 import paths from 'pages/Router/paths';
 import ConfirmationModal from 'components/ConfirmationModal';
-import classes from './Users.module.scss';
+import classes from './Scribes.module.scss';
 
-const Users = () => {
-  const { usersList, isAdmin, error, loading, deleted } = useSelector(
+const Scribes = () => {
+  const { ScribesList, isAdmin, error, loading, deleted } = useSelector(
     (state) => ({
-      usersList: state.users.data,
-      isAdmin: state.auth.userData.isAdmin,
-      error: state.users.error,
-      loading: state.users.loading,
-      deleted: state.users.deleted,
+      ScribesList: state.Scribes.data,
+      isAdmin: state.auth.ScribeData.isAdmin,
+      error: state.Scribes.error,
+      loading: state.Scribes.loading,
+      deleted: state.Scribes.deleted,
     }),
     shallowEqual
   );
 
   const [deleteModal, setDeleteModal] = useState({
-    userId: null,
+    ScribeId: null,
     isOpen: false,
   });
 
@@ -34,16 +34,16 @@ const Users = () => {
 
   useEffect(() => {
     if (isAdmin) {
-      dispatch(fetchUsers());
+      dispatch(fetchScribes());
     }
 
-    return () => dispatch(usersCleanUp());
+    return () => dispatch(ScribesCleanUp());
   }, [dispatch, isAdmin]);
 
   useEffect(() => {
     if (deleted && !loading) {
       setDeleteModal((prevState) => ({
-        userId: null,
+        ScribeId: null,
         isOpen: !prevState.isOpen,
       }));
     }
@@ -51,32 +51,33 @@ const Users = () => {
 
   const redirect = !isAdmin && <Redirect to={paths.ROOT} />;
 
-  const onRemoveButtonClickHandler = (userId) => {
+  const onRemoveButtonClickHandler = (ScribeId) => {
     setDeleteModal((prevState) => ({
-      userId,
+      ScribeId,
       isOpen: !prevState.isOpen,
     }));
   };
 
   const onCloseModalHandler = () => {
-    setDeleteModal({ userId: null, isOpen: false });
+    setDeleteModal({ ScribeId: null, isOpen: false });
   };
 
-  const onDeleteUserHandler = () => {
-    dispatch(deleteUser(deleteModal.userId));
+  const onDeleteScribeHandler = () => {
+    dispatch(deleteScribe(deleteModal.ScribeId));
   };
 
   const columns = [
+    
     {
-      Header: useFormatMessage('Users.name'),
+      Header: useFormatMessage('Scribes.name'),
       accessor: 'name',
     },
     {
-      Header: useFormatMessage('Users.email'),
+      Header: useFormatMessage('Scribes.email'),
       accessor: 'email',
     },
     {
-      Header: useFormatMessage('Users.created'),
+      Header: useFormatMessage('Scribes.created'),
       accessor: 'created',
       Cell: ({ row }) => (
         <small className="has-text-grey is-abbr-like">
@@ -98,7 +99,7 @@ const Users = () => {
           {!row.original.isAdmin && (
             <div className="buttons is-right">
               <Link
-                to={`/users/${row.original.id}`}
+                to={`/Scribes/${row.original.id}`}
                 className="button is-small is-primary"
               >
                 <span className="icon is-small">
@@ -124,7 +125,7 @@ const Users = () => {
   ];
 
   const data = search
-    ? usersList.filter((el) => {
+    ? ScribesList.filter((el) => {
         const clonedElem = { ...el };
         delete clonedElem.id;
         delete clonedElem.isAdmin;
@@ -133,15 +134,15 @@ const Users = () => {
           String(field).toLowerCase().includes(search.toLowerCase())
         );
       })
-    : usersList;
+    : ScribesList;
 
-  const deleteMessage = useFormatMessage('Users.delete');
+  const deleteMessage = useFormatMessage('Scribes.delete');
 
-  const confirmMessage = useFormatMessage('Users.confirm');
+  const confirmMessage = useFormatMessage('Scribes.confirm');
 
-  const permDeleteMessage = useFormatMessage('Users.permDelete');
+  const permDeleteMessage = useFormatMessage('Scribes.permDelete');
 
-  const cancelMessage = useFormatMessage('Users.cancel');
+  const cancelMessage = useFormatMessage('Scribes.cancel');
 
   return (
     <>
@@ -154,7 +155,7 @@ const Users = () => {
           title={confirmMessage}
           body={permDeleteMessage}
           cancelButtonMessage={cancelMessage}
-          onConfirmation={onDeleteUserHandler}
+          onConfirmation={onDeleteScribeHandler}
           onCancel={onCloseModalHandler}
         />
       )}
@@ -163,13 +164,13 @@ const Users = () => {
           <div className="level">
             <div className="level-left">
               <div className="level-item">
-                <h1 className="title">{useFormatMessage('Users.users')}</h1>
+                <h1 className="title">{useFormatMessage('Scribes.Scribes')}</h1>
               </div>
             </div>
             <div className="level-right">
               <div className="level-item">
-                <Link to={paths.ADD_USER} className="button">
-                  {useFormatMessage('Users.newUser')}
+                <Link to={paths.ADD_Scribe} className="button">
+                  {useFormatMessage('Scribes.newScribe')}
                 </Link>
               </div>
             </div>
@@ -180,7 +181,7 @@ const Users = () => {
         <div className="card has-table has-mobile-sort-spaced">
           <header className="card-header">
             <p className={classNames('card-header-title', classes.tableHeader)}>
-              <span>{useFormatMessage('Users.search')}</span>
+              <span>{useFormatMessage('Scribes.search')}</span>
               <input
                 type="text"
                 className="input"
@@ -199,4 +200,4 @@ const Users = () => {
   );
 };
 
-export default Users;
+export default Scribes;

@@ -15,12 +15,14 @@ import PrivateRoute from './PrivateRoute';
 
 const RouterComponent = () => {
   return (
-    <BrowserRouter>
+    <BrowserRouter basename=''>
       <Switch>
         <Route exact path={paths.LOGIN} component={Login} />
         <Route exact path={paths.RESET_PASSWORD} component={ResetPassword} />
         <PrivateRoute path={paths.ADD_USER} component={User} />
         <PrivateRoute path={paths.MODIFY_USER} component={User} />
+        <PrivateRoute path={paths.USERS} component={Users} />
+        <PrivateRoute path={paths.USERS} component={Users} />
         <PrivateRoute path={paths.USERS} component={Users} />
         <PrivateRoute path={paths.PROFILE} component={Profile} />
         <PrivateRoute path={paths.SECTION} component={Section} />

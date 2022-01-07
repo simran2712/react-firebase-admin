@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useSelector, shallowEqual } from 'react-redux';
+
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
@@ -46,13 +46,13 @@ SubMenu.propTypes = {
 };
 
 const Aside = ({ handleMobileToggle }) => {
-  const { isAdmin } = useSelector(
-    (state) => ({
-      isAdmin: state.auth.userData.isAdmin,
-    }),
-    shallowEqual
-  );
-
+  // const { isAdmin } = useSelector(
+  //   (state) => ({
+  //     isAdmin: state.auth.userData.isAdmin,
+  //   }),
+  //   shallowEqual
+  // );
+  const isAdmin = true;
   const usersMessage = useFormatMessage('Aside.users');
 
   return (
@@ -60,7 +60,7 @@ const Aside = ({ handleMobileToggle }) => {
       <Link to={paths.ROOT} className="aside-tools">
         <div className="aside-tools-label">
           <span>
-            <b>React</b> Firebase
+            Scribe Portal
           </span>
         </div>
       </Link>

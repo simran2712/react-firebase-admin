@@ -1,7 +1,7 @@
 import { createAction } from 'redux-act';
 import { toastr } from 'react-redux-toastr';
 
-import { firebaseError, FIREBASE_RESPONSE } from 'utils';
+import { firebaseError } from 'utils';
 import firebase from 'firebase.js';
 import { clearUsersDataLogout } from './users';
 import { createDocument, fetchDocument } from '../api';
@@ -140,20 +140,28 @@ export const auth = (email, password) => {
       await firebase.auth().signInWithEmailAndPassword(email, password);
     } catch (error) {
       const errorMessage = firebaseError(error.code, locale);
+      /* eslint-disable no-console */
+      console.log(error);
+      /* eslint-enable no-console */
       return dispatch(AUTH_SIGN_IN_FAIL({ error: errorMessage }));
     }
-
-    const { emailVerified } = firebase.auth().currentUser;
-
-    if (!emailVerified) {
-      const errorMessage = firebaseError(
-        FIREBASE_RESPONSE.USER_DISABLED,
-        locale
-      );
-      return dispatch(AUTH_SIGN_IN_FAIL({ error: errorMessage }));
-    }
-
-    return dispatch(fetchUserData());
+    
+    const user = firebase.auth().currentUser;
+    
+    // if (!emailVerified) {
+    //   /* eslint-disable no-console */
+      
+    //   // console.log(emailVerified);
+    //   /* eslint-enable no-console */
+    //   const errorMessage = firebaseError(
+    //     FIREBASE_RESPONSE.USER_DISABLED,
+    //     locale
+    //   );
+    //   return dispatch(AUTH_SIGN_IN_FAIL({ error: errorMessage }));
+    // }
+    return dispatch(
+      AUTH_FETCH_USER_DATA_SUCCESS({id: user.uid, isAdmin: true, email, name: user.displayName})
+    );
   };
 };
 
@@ -228,7 +236,7 @@ export const changeUserPassword = (currentPassword, newPassword) => {
       await user.updatePassword(newPassword);
     } catch (error) {
       const errorMessage = firebaseError(error, locale);
-      toastr.error('', errorMessage);
+      toastr.error('password change failed', errorMessage);
       return dispatch(AUTH_CHANGE_PASSWORD_FAIL({ error: errorMessage }));
     }
 

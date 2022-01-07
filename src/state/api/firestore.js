@@ -1,4 +1,5 @@
 import firebase from 'firebase.js';
+import 'firebase/firestore';
 
 const getFirestoreRef = (path) => firebase.firestore().collection(path);
 
@@ -7,7 +8,10 @@ export const fetchDocument = async (collection, id) => {
   if (!document.exists) {
     return null;
   }
-
+  /* eslint-disable no-console */
+  // console.log("fetched data from firestore, ", document);
+  /* eslint-enable no-console */
+  
   return { id: document.id, ...document.data() };
 };
 
@@ -29,7 +33,9 @@ export const fetchCollection = async (collection, options = {}) => {
   (await baseQuery.get()).forEach((doc) =>
     data.push({ id: doc.id, ...doc.data() })
   );
-
+  /* eslint-disable no-console */
+  // console.log("fetched data from firestore, ", data);
+  /* eslint-enable no-console */
   return data;
 };
 

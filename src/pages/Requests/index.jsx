@@ -6,19 +6,19 @@ import ClipLoader from 'react-spinners/ClipLoader';
 
 import { useFormatMessage, useFormatDate } from 'hooks';
 import Table from 'components/Table';
-import { fetchUsers, deleteUser, usersCleanUp } from 'state/actions/users';
+import { fetchRequests, deleteUser, RequestsCleanUp } from 'state/actions/Requests';
 import paths from 'pages/Router/paths';
 import ConfirmationModal from 'components/ConfirmationModal';
-import classes from './Users.module.scss';
+import classes from './Requests.module.scss';
 
-const Users = () => {
-  const { usersList, isAdmin, error, loading, deleted } = useSelector(
+const Requests = () => {
+  const { RequestsList, isAdmin, error, loading, deleted } = useSelector(
     (state) => ({
-      usersList: state.users.data,
+      RequestsList: state.Requests.data,
       isAdmin: state.auth.userData.isAdmin,
-      error: state.users.error,
-      loading: state.users.loading,
-      deleted: state.users.deleted,
+      error: state.Requests.error,
+      loading: state.Requests.loading,
+      deleted: state.Requests.deleted,
     }),
     shallowEqual
   );
@@ -34,10 +34,10 @@ const Users = () => {
 
   useEffect(() => {
     if (isAdmin) {
-      dispatch(fetchUsers());
+      dispatch(fetchRequests());
     }
 
-    return () => dispatch(usersCleanUp());
+    return () => dispatch(RequestsCleanUp());
   }, [dispatch, isAdmin]);
 
   useEffect(() => {
@@ -68,15 +68,15 @@ const Users = () => {
 
   const columns = [
     {
-      Header: useFormatMessage('Users.name'),
+      Header: useFormatMessage('Requests.name'),
       accessor: 'name',
     },
     {
-      Header: useFormatMessage('Users.email'),
+      Header: useFormatMessage('Requests.email'),
       accessor: 'email',
     },
     {
-      Header: useFormatMessage('Users.created'),
+      Header: useFormatMessage('Requests.created'),
       accessor: 'created',
       Cell: ({ row }) => (
         <small className="has-text-grey is-abbr-like">
@@ -98,7 +98,7 @@ const Users = () => {
           {!row.original.isAdmin && (
             <div className="buttons is-right">
               <Link
-                to={`/users/${row.original.id}`}
+                to={`/Requests/${row.original.id}`}
                 className="button is-small is-primary"
               >
                 <span className="icon is-small">
@@ -124,7 +124,7 @@ const Users = () => {
   ];
 
   const data = search
-    ? usersList.filter((el) => {
+    ? RequestsList.filter((el) => {
         const clonedElem = { ...el };
         delete clonedElem.id;
         delete clonedElem.isAdmin;
@@ -133,15 +133,15 @@ const Users = () => {
           String(field).toLowerCase().includes(search.toLowerCase())
         );
       })
-    : usersList;
+    : RequestsList;
 
-  const deleteMessage = useFormatMessage('Users.delete');
+  const deleteMessage = useFormatMessage('Requests.delete');
 
-  const confirmMessage = useFormatMessage('Users.confirm');
+  const confirmMessage = useFormatMessage('Requests.confirm');
 
-  const permDeleteMessage = useFormatMessage('Users.permDelete');
+  const permDeleteMessage = useFormatMessage('Requests.permDelete');
 
-  const cancelMessage = useFormatMessage('Users.cancel');
+  const cancelMessage = useFormatMessage('Requests.cancel');
 
   return (
     <>
@@ -163,13 +163,13 @@ const Users = () => {
           <div className="level">
             <div className="level-left">
               <div className="level-item">
-                <h1 className="title">{useFormatMessage('Users.users')}</h1>
+                <h1 className="title">{useFormatMessage('Requests.Requests')}</h1>
               </div>
             </div>
             <div className="level-right">
               <div className="level-item">
                 <Link to={paths.ADD_USER} className="button">
-                  {useFormatMessage('Users.newUser')}
+                  {useFormatMessage('Requests.newUser')}
                 </Link>
               </div>
             </div>
@@ -180,7 +180,7 @@ const Users = () => {
         <div className="card has-table has-mobile-sort-spaced">
           <header className="card-header">
             <p className={classNames('card-header-title', classes.tableHeader)}>
-              <span>{useFormatMessage('Users.search')}</span>
+              <span>{useFormatMessage('Requests.search')}</span>
               <input
                 type="text"
                 className="input"
@@ -199,4 +199,4 @@ const Users = () => {
   );
 };
 
-export default Users;
+export default Requests;

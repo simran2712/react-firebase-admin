@@ -10,13 +10,14 @@ const Footer = () => {
         <div className={classNames('level', classes.level)}>
           <div className="level-left">
             <div className="level-item">
-              © 2020 <span>&nbsp; CreateThrive</span>
+              Scribe Portal NSS, forked from
+              <a href="https://github.com/CreateThrive/react-firebase-admin">CreateThrive</a>
             </div>
           </div>
           <div className={classNames('level-right', classes.levelRight)}>
             <div className="level-item">
               <div className="logo">
-                <a href="https://createthrive.com">
+                <a href="https://github.com/CreateThrive/react-firebase-admin">
                   <img
                     src="https://createthrive.com/assets/images/Logo-CT.svg"
                     alt="CreateThrive.com"
