@@ -14,16 +14,7 @@ import 'firebase/functions';
 //   appId: process.env.REACT_APP_FIRE_BASE_APP_ID,
 //   measurementId: process.env.REACT_APP_FIRE_BASE_MEASURMENT_ID,
 // };
-const config = {
-    apiKey: "AIzaSyC5NOMhO8GCjF5v5HikigBQQ88cB7KDXQI",
-    authDomain: "scribe-portal-nss.firebaseapp.com",
-    projectId: "scribe-portal-nss",
-    storageBucket: "scribe-portal-nss.appspot.com",
-    messagingSenderId: "380046350969",
-    appId: "1:380046350969:web:20c0098e2ca972762412a8",
-    measurementId: "G-QL9YXM3SMT"
-};
-  
+
 
 firebase.initializeApp(config);
 firebase.database();
