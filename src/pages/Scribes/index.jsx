@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector, shallowEqual } from 'react-redux';
-import { Redirect, Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import classNames from 'classnames';
 import ClipLoader from 'react-spinners/ClipLoader';
 
@@ -45,7 +45,7 @@ const Scribes = () => {
     }
   }, [deleted, loading]);
 
-  const redirect = <Redirect to={paths.ROOT} />;
+  
 
   const onRemoveButtonClickHandler = (ScribeId) => {
     setDeleteModal((prevState) => ({
@@ -139,7 +139,7 @@ const Scribes = () => {
 
   return (
     <>
-      {redirect}
+      
       {deleteModal.isOpen && (
         <ConfirmationModal
           isActive={deleteModal.isOpen}

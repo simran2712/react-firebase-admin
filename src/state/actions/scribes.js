@@ -75,7 +75,7 @@ export const fetchScribes = (scribeId = '') => {
         })
         );
     }
-    const { id } = getState().auth.scribeData;
+    
 
     let scribes;
 
@@ -91,7 +91,7 @@ export const fetchScribes = (scribeId = '') => {
 
     return dispatch(
       SCRIBES_FETCH_DATA_SUCCESS({
-        data: scribes.filter((scribe) => scribe.id !== id),
+        data: scribes,
       })
     );
   };
