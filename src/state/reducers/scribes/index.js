@@ -1,21 +1,21 @@
 import { createReducer } from 'redux-act';
 
 import {
-  USERS_FETCH_DATA_INIT,
-  USERS_FETCH_DATA_SUCCESS,
-  USERS_FETCH_DATA_FAIL,
-  USERS_DELETE_USER_INIT,
-  USERS_DELETE_USER_SUCCESS,
-  USERS_DELETE_USER_FAIL,
-  USERS_CREATE_USER_INIT,
-  USERS_CREATE_USER_SUCCESS,
-  USERS_CREATE_USER_FAIL,
-  USERS_MODIFY_USER_INIT,
-  USERS_MODIFY_USER_SUCCESS,
-  USERS_MODIFY_USER_FAIL,
-  USERS_CLEAN_UP,
-  USERS_CLEAR_DATA_LOGOUT,
-} from 'state/actions/users';
+  SCRIBES_FETCH_DATA_INIT,
+  SCRIBES_FETCH_DATA_SUCCESS,
+  SCRIBES_FETCH_DATA_FAIL,
+  SCRIBES_DELETE_USER_INIT,
+  SCRIBES_DELETE_USER_SUCCESS,
+  SCRIBES_DELETE_USER_FAIL,
+  SCRIBES_CREATE_USER_INIT,
+  SCRIBES_CREATE_USER_SUCCESS,
+  SCRIBES_CREATE_USER_FAIL,
+  SCRIBES_MODIFY_USER_INIT,
+  SCRIBES_MODIFY_USER_SUCCESS,
+  SCRIBES_MODIFY_USER_FAIL,
+  SCRIBES_CLEAN_UP,
+  SCRIBES_CLEAR_DATA_LOGOUT,
+} from 'state/actions/scribes';
 
 const initialState = {
   data: [],
@@ -25,71 +25,71 @@ const initialState = {
   deleted: false,
 };
 
-export const usersReducer = createReducer(
+export const scribesReducer = createReducer(
   {
-    [USERS_FETCH_DATA_INIT]: () => ({
+    [SCRIBES_FETCH_DATA_INIT]: () => ({
       ...initialState,
       loading: true,
     }),
-    [USERS_FETCH_DATA_SUCCESS]: (state, payload) => ({
+    [SCRIBES_FETCH_DATA_SUCCESS]: (state, payload) => ({
       ...state,
       data: payload.data,
       loading: false,
       error: null,
     }),
-    [USERS_FETCH_DATA_FAIL]: (state, payload) => ({
+    [SCRIBES_FETCH_DATA_FAIL]: (state, payload) => ({
       ...state,
       loading: false,
       error: payload.error,
     }),
-    [USERS_DELETE_USER_INIT]: (state) => ({
+    [SCRIBES_DELETE_USER_INIT]: (state) => ({
       ...state,
       loading: true,
     }),
-    [USERS_DELETE_USER_SUCCESS]: (state, payload) => ({
+    [SCRIBES_DELETE_USER_SUCCESS]: (state, payload) => ({
       ...state,
       data: state.data.filter((elem) => elem.id !== payload.id),
       loading: false,
       error: null,
       deleted: true,
     }),
-    [USERS_DELETE_USER_FAIL]: (state, payload) => ({
+    [SCRIBES_DELETE_USER_FAIL]: (state, payload) => ({
       ...state,
       loading: false,
       error: payload.error,
     }),
-    [USERS_CREATE_USER_INIT]: (state) => ({
+    [SCRIBES_CREATE_USER_INIT]: (state) => ({
       ...state,
       loading: true,
     }),
-    [USERS_CREATE_USER_SUCCESS]: (state, payload) => ({
+    [SCRIBES_CREATE_USER_SUCCESS]: (state, payload) => ({
       ...state,
-      data: state.data.concat(payload.user),
+      data: state.data.concat(payload.scribe),
       loading: false,
       error: null,
       success: true,
     }),
-    [USERS_CREATE_USER_FAIL]: (state, payload) => ({
+    [SCRIBES_CREATE_USER_FAIL]: (state, payload) => ({
       ...state,
       loading: false,
       error: payload.error,
     }),
-    [USERS_MODIFY_USER_INIT]: (state) => ({
+    [SCRIBES_MODIFY_USER_INIT]: (state) => ({
       ...state,
       loading: true,
     }),
-    [USERS_MODIFY_USER_SUCCESS]: (state, payload) => ({
+    [SCRIBES_MODIFY_USER_SUCCESS]: (state, payload) => ({
       ...state,
       data: !state.data
         ? []
         : state.data.map((elem) => {
             if (elem.id === payload.id) {
               return {
-                name: payload.user.name,
-                location: payload.user.location,
+                name: payload.scribe.name,
+                location: payload.scribe.location,
                 id: payload.id,
-                logoUrl: payload.user.logoUrl,
-                createdAt: payload.user.createdAt,
+                logoUrl: payload.scribe.logoUrl,
+                createdAt: payload.scribe.createdAt,
                 email: elem.email,
               };
             }
@@ -99,19 +99,19 @@ export const usersReducer = createReducer(
       error: null,
       success: true,
     }),
-    [USERS_MODIFY_USER_FAIL]: (state, payload) => ({
+    [SCRIBES_MODIFY_USER_FAIL]: (state, payload) => ({
       ...state,
       loading: false,
       error: payload.error,
     }),
-    [USERS_CLEAN_UP]: (state) => ({
+    [SCRIBES_CLEAN_UP]: (state) => ({
       ...state,
       loading: false,
       error: null,
       success: false,
       deleted: false,
     }),
-    [USERS_CLEAR_DATA_LOGOUT]: () => ({
+    [SCRIBES_CLEAR_DATA_LOGOUT]: () => ({
       ...initialState,
     }),
   },

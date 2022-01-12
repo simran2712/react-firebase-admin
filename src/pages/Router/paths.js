@@ -3,6 +3,8 @@ export default {
   LOGIN: '/login',
   USERS: '/users',
   ADD_USER: '/users/new',
+  SCRIBES: '/scribes',
+  ADD_SCRIBE: '/scribes/new',
   MODIFY_USER: '/users/:id',
   PROFILE: '/profile',
   RESET_PASSWORD: '/recover-password',

@@ -4,6 +4,7 @@ import { Route, Switch, BrowserRouter } from 'react-router-dom';
 import Login from 'pages/Login';
 import Home from 'pages/Home';
 import Users from 'pages/Users';
+import Scribes from 'pages/Scribes';
 import Profile from 'pages/Profile';
 import ResetPassword from 'pages/ResetPassword';
 import NotFound from 'pages/NotFound';
@@ -24,6 +25,7 @@ const RouterComponent = () => {
         <PrivateRoute path={paths.USERS} component={Users} />
         <PrivateRoute path={paths.USERS} component={Users} />
         <PrivateRoute path={paths.USERS} component={Users} />
+        <PrivateRoute path={paths.SCRIBES} component={Scribes} />
         <PrivateRoute path={paths.PROFILE} component={Profile} />
         <PrivateRoute path={paths.SECTION} component={Section} />
         <PrivateRoute path={paths.SUBMENU_1} component={Submenu} />

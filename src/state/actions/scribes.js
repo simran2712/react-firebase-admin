@@ -40,7 +40,7 @@ export const SCRIBES_CLEAN_UP = createAction('SCRIBES_CLEAN_UP');
 
 export const SCRIBES_CLEAR_DATA_LOGOUT = createAction('SCRIBES_CLEAR_DATA_LOGOUT');
 
-export const fetchUsers = (userId = '') => {
+export const fetchScribes = (scribeId = '') => {
   return async (dispatch, getState) => {
     dispatch(checkUserData());
 
@@ -105,7 +105,7 @@ const deleteLogo = (oldLogo) => {
   return firebase.storage().ref(`scribes/${logoPath}`).delete();
 };
 
-export const deleteUser = (id) => {
+export const deleteScribe = (id) => {
   return async (dispatch, getState) => {
     dispatch(SCRIBES_DELETE_USER_INIT());
     const { locale } = getState().preferences;
@@ -292,4 +292,4 @@ export const modifyUser = ({
   };
 };
 
-export const usersCleanUp = () => (dispatch) => dispatch(SCRIBES_CLEAN_UP());
+export const ScribesCleanUp = () => (dispatch) => dispatch(SCRIBES_CLEAN_UP());

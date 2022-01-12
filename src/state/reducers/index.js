@@ -5,6 +5,7 @@ import { reducer as toastrReducer } from 'react-redux-toastr';
 
 import { authReducer } from './auth';
 import { usersReducer } from './users';
+import { scribesReducer } from './scribes';
 import { preferencesReducer } from './preferences';
 
 export default combineReducers({
@@ -27,6 +28,14 @@ export default combineReducers({
       blacklist: ['error', 'loading'],
     },
     usersReducer
+  ),
+  Scribes: persistReducer(
+    {
+      key: 'Scribes',
+      storage,
+      blacklist: ['error', 'loading']
+    },
+    scribesReducer
   ),
   toastr: toastrReducer,
 });

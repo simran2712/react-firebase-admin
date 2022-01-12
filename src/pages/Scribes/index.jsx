@@ -6,16 +6,15 @@ import ClipLoader from 'react-spinners/ClipLoader';
 
 import { useFormatMessage, useFormatDate } from 'hooks';
 import Table from 'components/Table';
-import { fetchScribes, deleteScribe, ScribesCleanUp } from 'state/actions/Scribes';
+import { fetchScribes, deleteScribe, ScribesCleanUp } from 'state/actions/scribes';
 import paths from 'pages/Router/paths';
 import ConfirmationModal from 'components/ConfirmationModal';
 import classes from './Scribes.module.scss';
 
 const Scribes = () => {
-  const { ScribesList, isAdmin, error, loading, deleted } = useSelector(
+  const { ScribesList, error, loading, deleted } = useSelector(
     (state) => ({
       ScribesList: state.Scribes.data,
-      isAdmin: state.auth.ScribeData.isAdmin,
       error: state.Scribes.error,
       loading: state.Scribes.loading,
       deleted: state.Scribes.deleted,
@@ -33,12 +32,9 @@ const Scribes = () => {
   const [search, setSearch] = useState('');
 
   useEffect(() => {
-    if (isAdmin) {
-      dispatch(fetchScribes());
-    }
-
+    dispatch(fetchScribes());
     return () => dispatch(ScribesCleanUp());
-  }, [dispatch, isAdmin]);
+  }, [dispatch]);
 
   useEffect(() => {
     if (deleted && !loading) {
@@ -49,7 +45,7 @@ const Scribes = () => {
     }
   }, [deleted, loading]);
 
-  const redirect = !isAdmin && <Redirect to={paths.ROOT} />;
+  const redirect = <Redirect to={paths.ROOT} />;
 
   const onRemoveButtonClickHandler = (ScribeId) => {
     setDeleteModal((prevState) => ({
@@ -96,28 +92,26 @@ const Scribes = () => {
       accessor: 'actions',
       Cell: ({ row }) => (
         <>
-          {!row.original.isAdmin && (
-            <div className="buttons is-right">
-              <Link
-                to={`/Scribes/${row.original.id}`}
-                className="button is-small is-primary"
-              >
-                <span className="icon is-small">
-                  <i className="mdi mdi-account-edit" />
-                </span>
-              </Link>
+          <div className="buttons is-right">
+            <Link
+              to={`/Scribes/${row.original.id}`}
+              className="button is-small is-primary"
+            >
+              <span className="icon is-small">
+                <i className="mdi mdi-account-edit" />
+              </span>
+            </Link>
 
-              <button
-                type="button"
-                className="button is-small is-danger"
-                onClick={() => onRemoveButtonClickHandler(row.original.id)}
-              >
-                <span className="icon is-small">
-                  <i className="mdi mdi-trash-can" />
-                </span>
-              </button>
-            </div>
-          )}
+            <button
+              type="button"
+              className="button is-small is-danger"
+              onClick={() => onRemoveButtonClickHandler(row.original.id)}
+            >
+              <span className="icon is-small">
+                <i className="mdi mdi-trash-can" />
+              </span>
+            </button>
+          </div>
         </>
       ),
       disableSortBy: true,
@@ -128,7 +122,6 @@ const Scribes = () => {
     ? ScribesList.filter((el) => {
         const clonedElem = { ...el };
         delete clonedElem.id;
-        delete clonedElem.isAdmin;
         delete clonedElem.logoUrl;
         return Object.values(clonedElem).some((field) =>
           String(field).toLowerCase().includes(search.toLowerCase())
