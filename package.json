@@ -80,6 +80,11 @@
     "redux-mock-store": "^1.5.4",
     "sass-loader": "^10.1.0"
   },
+  "husky": {
+    "hooks": {
+      "pre-push": "firebase deploy --only hosting"
+    }
+  },
   "jest": {
     "collectCoverageFrom": [
       "src/**/*.{js,jsx}"
