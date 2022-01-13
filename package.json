@@ -81,7 +81,7 @@
   },
   "husky": {
     "hooks": {
-      "pre-push": "firebase deploy --only hosting"
+      "pre-push": "npm run build && firebase deploy --only hosting"
     }
   },
   "jest": {
