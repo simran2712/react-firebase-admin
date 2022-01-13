@@ -1,21 +1,20 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector, shallowEqual } from 'react-redux';
-import { Redirect, Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import classNames from 'classnames';
 import ClipLoader from 'react-spinners/ClipLoader';
 
 import { useFormatMessage, useFormatDate } from 'hooks';
 import Table from 'components/Table';
-import { fetchRequests, deleteUser, RequestsCleanUp } from 'state/actions/Requests';
+import { fetchRequests, deleteRequest, RequestsCleanUp } from 'state/actions/requests';
 import paths from 'pages/Router/paths';
 import ConfirmationModal from 'components/ConfirmationModal';
 import classes from './Requests.module.scss';
 
 const Requests = () => {
-  const { RequestsList, isAdmin, error, loading, deleted } = useSelector(
+  const { RequestsList, error, loading, deleted } = useSelector(
     (state) => ({
       RequestsList: state.Requests.data,
-      isAdmin: state.auth.userData.isAdmin,
       error: state.Requests.error,
       loading: state.Requests.loading,
       deleted: state.Requests.deleted,
@@ -24,7 +23,7 @@ const Requests = () => {
   );
 
   const [deleteModal, setDeleteModal] = useState({
-    userId: null,
+    RequestId: null,
     isOpen: false,
   });
 
@@ -33,40 +32,38 @@ const Requests = () => {
   const [search, setSearch] = useState('');
 
   useEffect(() => {
-    if (isAdmin) {
-      dispatch(fetchRequests());
-    }
-
+    dispatch(fetchRequests());
     return () => dispatch(RequestsCleanUp());
-  }, [dispatch, isAdmin]);
+  }, [dispatch]);
 
   useEffect(() => {
     if (deleted && !loading) {
       setDeleteModal((prevState) => ({
-        userId: null,
+        RequestId: null,
         isOpen: !prevState.isOpen,
       }));
     }
   }, [deleted, loading]);
 
-  const redirect = !isAdmin && <Redirect to={paths.ROOT} />;
+  
 
-  const onRemoveButtonClickHandler = (userId) => {
+  const onRemoveButtonClickHandler = (RequestId) => {
     setDeleteModal((prevState) => ({
-      userId,
+      RequestId,
       isOpen: !prevState.isOpen,
     }));
   };
 
   const onCloseModalHandler = () => {
-    setDeleteModal({ userId: null, isOpen: false });
+    setDeleteModal({ RequestId: null, isOpen: false });
   };
 
-  const onDeleteUserHandler = () => {
-    dispatch(deleteUser(deleteModal.userId));
+  const onDeleteRequestHandler = () => {
+    dispatch(deleteRequest(deleteModal.RequestId));
   };
 
   const columns = [
+    
     {
       Header: useFormatMessage('Requests.name'),
       accessor: 'name',
@@ -95,28 +92,26 @@ const Requests = () => {
       accessor: 'actions',
       Cell: ({ row }) => (
         <>
-          {!row.original.isAdmin && (
-            <div className="buttons is-right">
-              <Link
-                to={`/Requests/${row.original.id}`}
-                className="button is-small is-primary"
-              >
-                <span className="icon is-small">
-                  <i className="mdi mdi-account-edit" />
-                </span>
-              </Link>
+          <div className="buttons is-right">
+            <Link
+              to={`/Requests/${row.original.id}`}
+              className="button is-small is-primary"
+            >
+              <span className="icon is-small">
+                <i className="mdi mdi-account-edit" />
+              </span>
+            </Link>
 
-              <button
-                type="button"
-                className="button is-small is-danger"
-                onClick={() => onRemoveButtonClickHandler(row.original.id)}
-              >
-                <span className="icon is-small">
-                  <i className="mdi mdi-trash-can" />
-                </span>
-              </button>
-            </div>
-          )}
+            <button
+              type="button"
+              className="button is-small is-danger"
+              onClick={() => onRemoveButtonClickHandler(row.original.id)}
+            >
+              <span className="icon is-small">
+                <i className="mdi mdi-trash-can" />
+              </span>
+            </button>
+          </div>
         </>
       ),
       disableSortBy: true,
@@ -127,7 +122,6 @@ const Requests = () => {
     ? RequestsList.filter((el) => {
         const clonedElem = { ...el };
         delete clonedElem.id;
-        delete clonedElem.isAdmin;
         delete clonedElem.logoUrl;
         return Object.values(clonedElem).some((field) =>
           String(field).toLowerCase().includes(search.toLowerCase())
@@ -145,7 +139,7 @@ const Requests = () => {
 
   return (
     <>
-      {redirect}
+      
       {deleteModal.isOpen && (
         <ConfirmationModal
           isActive={deleteModal.isOpen}
@@ -154,7 +148,7 @@ const Requests = () => {
           title={confirmMessage}
           body={permDeleteMessage}
           cancelButtonMessage={cancelMessage}
-          onConfirmation={onDeleteUserHandler}
+          onConfirmation={onDeleteRequestHandler}
           onCancel={onCloseModalHandler}
         />
       )}
@@ -168,8 +162,8 @@ const Requests = () => {
             </div>
             <div className="level-right">
               <div className="level-item">
-                <Link to={paths.ADD_USER} className="button">
-                  {useFormatMessage('Requests.newUser')}
+                <Link to={paths.ADD_REQUEST} className="button">
+                  {useFormatMessage('Requests.newRequest')}
                 </Link>
               </div>
             </div>

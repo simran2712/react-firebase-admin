@@ -55,6 +55,7 @@ const Aside = ({ handleMobileToggle }) => {
   const isAdmin = true;
   const usersMessage = useFormatMessage('Aside.users');
   const scribesMessage = useFormatMessage('Aside.scribes');
+  const requestsMessage = useFormatMessage('Aside.requests');
 
   return (
     <aside className="aside is-placed-left is-expanded">
@@ -105,6 +106,18 @@ const Aside = ({ handleMobileToggle }) => {
                   <i className="mdi mdi-account-supervisor" />
                 </span>
                 <span className="menu-item-label">{scribesMessage}</span>
+              </NavLink>
+            </li>
+            <li>
+              <NavLink
+                to={paths.REQUESTS}
+                className="has-icon"
+                onClick={handleMobileToggle}
+              >
+                <span className="icon">
+                  <i className="mdi mdi-account-supervisor" />
+                </span>
+                <span className="menu-item-label">{requestsMessage}</span>
               </NavLink>
             </li>
             </>

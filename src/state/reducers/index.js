@@ -7,6 +7,7 @@ import { authReducer } from './auth';
 import { usersReducer } from './users';
 import { scribesReducer } from './scribes';
 import { preferencesReducer } from './preferences';
+import { requestsReducer } from './requests';
 
 export default combineReducers({
   auth: persistReducer(
@@ -36,6 +37,14 @@ export default combineReducers({
       blacklist: ['error', 'loading']
     },
     scribesReducer
+  ),
+  Requests: persistReducer(
+    {
+      key: 'Requests',
+      storage,
+      blacklist: ['error', 'loading']
+    },
+    requestsReducer
   ),
   toastr: toastrReducer,
 });
