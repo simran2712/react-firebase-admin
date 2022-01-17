@@ -88,3 +88,7 @@
   tr:not(.is-selected):hover:nth-child(even) {
   background-color: #fafafa;
 }
+
+.b-table {
+  overflow-x: auto;
+}

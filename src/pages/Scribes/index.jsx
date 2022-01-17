@@ -87,6 +87,84 @@ const Scribes = () => {
       ),
     },
     {
+      Header: useFormatMessage('Scribes.dob'),
+      accessor: 'dob',
+      Cell: ({ row }) => (
+        <small className="has-text-grey is-abbr-like">
+          {useFormatDate(row.original.DOB, {
+            weekday: 'short',
+            year: 'numeric',
+            month: 'short',
+            day: 'numeric',
+          })}
+        </small>
+      ),
+    },
+    {
+      Header: useFormatMessage('Scribes.address'),
+      accessor: 'address',
+    },
+    {
+      Header: useFormatMessage('Scribes.cbt'),
+      accessor: 'cbt',
+      Cell: ({ row }) => (
+        <small className="has-text-grey is-abbr-like">
+          {row.original.CBT ? "true" : "false"}
+        </small>
+      ),
+    },
+    {
+      Header: useFormatMessage('Scribes.English'),
+      accessor: 'English',
+      Cell: ({ row }) => (
+        <small className="has-text-grey is-abbr-like">
+          {row.original.English ? "true" : "false"}
+        </small>
+      ),
+    },
+    {
+      Header: useFormatMessage('Scribes.Hindi'),
+      accessor: 'Hindi',
+      Cell: ({ row }) => (
+        <small className="has-text-grey is-abbr-like">
+          {row.original.Hindi ? "true" : "false"}
+        </small>
+      ),
+    },
+    {
+      Header: useFormatMessage('Scribes.Math'),
+      accessor: 'Math',
+      Cell: ({ row }) => (
+        <small className="has-text-grey is-abbr-like">
+          {row.original.Math ? "true" : "false"}
+        </small>
+      ),
+    },
+    {
+      Header: useFormatMessage('Scribes.languages'),
+      accessor: 'languages',
+    },
+    {
+      Header: useFormatMessage('Scribes.gender'),
+      accessor: 'gender',
+    },
+    {
+      Header: useFormatMessage('Scribes.appLang'),
+      accessor: 'appLang',
+    },
+    {
+      Header: useFormatMessage('Scribes.eno'),
+      accessor: 'eno',
+    },
+    {
+      Header: useFormatMessage('Scribes.mobile'),
+      accessor: 'mobile',
+    },
+    {
+      Header: useFormatMessage('Scribes.pinCode'),
+      accessor: 'pinCode',
+    },
+    {
       Header: '',
       id: 'actions',
       accessor: 'actions',
