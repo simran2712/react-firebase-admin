@@ -1,14 +1,82 @@
 /* eslint-disable react/jsx-props-no-spreading */
-import React from 'react';
+import React, { useMemo } from 'react';
 import classNames from 'classnames';
-import { useTable, useSortBy, usePagination } from 'react-table';
+import { useTable, useSortBy, usePagination, useFilters, useGlobalFilter, useAsyncDebounce } from 'react-table';
 import PropTypes from 'prop-types';
+import * as matchSorter from 'match-sorter';
 
 import { useFormatMessage } from 'hooks';
 import classes from './Table.module.scss';
 import './TableMobile.css';
 
+function DefaultColumnFilter({
+  column: { filterValue, preFilteredRows, setFilter },
+}) {
+  const count = preFilteredRows.length;
+
+  return (
+    <input
+      value={filterValue || ''}
+      onChange={e => {
+        setFilter(e.target.value || undefined); // Set undefined to remove the filter entirely
+      }}
+      placeholder={`Search ${count} records...`}
+    />
+  );
+}
+
+function fuzzyTextFilterFn(rows, id, filterValue) {
+  return matchSorter(rows, filterValue, { keys: [row => row.values[id]] });
+}
+
+// Let the table remove the filter if the string is empty
+fuzzyTextFilterFn.autoRemove = val => !val;
+
+function GlobalFilter({
+  preGlobalFilteredRows,
+  globalFilter,
+  setGlobalFilter,
+}) {
+  const count = preGlobalFilteredRows.length;
+  const [value, setValue] = React.useState(globalFilter);
+  const onChange = useAsyncDebounce(value_ => {
+    setGlobalFilter(value_ || undefined);
+  }, 200);
+
+  return (
+    <span>
+      Search:{' '}
+      <input
+        value={value || ""}
+        onChange={e => {
+          setValue(e.target.value);
+          onChange(e.target.value);
+        }}
+        placeholder={`${count} records...`}
+        style={{
+          fontSize: '1.1rem',
+          border: '0',
+        }}
+      />
+    </span>
+  );
+}
+
 const Table = ({ columns, data }) => {
+  const filterTypes = React.useMemo(
+    () => ({
+      // Add a new fuzzyTextFilterFn filter type.
+      fuzzyText: fuzzyTextFilterFn,
+    }),
+    []
+  );
+  const defaultColumn = useMemo(
+    () => ({
+      // Let's set up our default Filter UI
+      Filter: DefaultColumnFilter,
+    }),
+    []
+  );
   const {
     getTableProps,
     getTableBodyProps,
@@ -16,7 +84,10 @@ const Table = ({ columns, data }) => {
     page,
     prepareRow,
     pageCount,
-    state: { pageIndex, pageSize },
+    visibleColumns,
+    preGlobalFilteredRows,
+    setGlobalFilter,
+    state: { globalFilter, pageIndex, pageSize },
     gotoPage,
     previousPage,
     nextPage,
@@ -27,13 +98,16 @@ const Table = ({ columns, data }) => {
     {
       columns,
       data,
+      defaultColumn,
+      filterTypes
     },
+    useFilters,
+    useGlobalFilter,
     useSortBy,
     usePagination
   );
 
   const perPage = useFormatMessage('Table.perPage');
-
   return (
     <div className="table-wrapper">
       <table
@@ -65,11 +139,26 @@ const Table = ({ columns, data }) => {
                         />
                       </span>
                     )}
+                    {column.canFilter ? column.render('Filter') : null}
                   </div>
                 </th>
               ))}
             </tr>
           ))}
+          <tr>
+            <th
+              colSpan={visibleColumns.length}
+              style={{
+                textAlign: 'left',
+              }}
+            >
+              <GlobalFilter
+                preGlobalFilteredRows={preGlobalFilteredRows}
+                globalFilter={globalFilter}
+                setGlobalFilter={setGlobalFilter}
+              />
+            </th>
+          </tr>
         </thead>
         <tbody {...getTableBodyProps()}>
           {page.map((row) => {
