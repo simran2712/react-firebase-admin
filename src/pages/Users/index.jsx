@@ -90,6 +90,84 @@ const Users = () => {
       ),
     },
     {
+      Header: useFormatMessage('Users.dob'),
+      accessor: 'dob',
+      Cell: ({ row }) => (
+        <small className="has-text-grey is-abbr-like">
+          {useFormatDate(row.original.DOB, {
+            weekday: 'short',
+            year: 'numeric',
+            month: 'short',
+            day: 'numeric',
+          })}
+        </small>
+      ),
+    },
+    {
+      Header: useFormatMessage('Users.address'),
+      accessor: 'address',
+    },
+    {
+      Header: useFormatMessage('Users.cbt'),
+      accessor: 'cbt',
+      Cell: ({ row }) => (
+        <small className="has-text-grey is-abbr-like">
+          {row.original.CBT ? "true" : "false"}
+        </small>
+      ),
+    },
+    {
+      Header: useFormatMessage('Users.English'),
+      accessor: 'English',
+      Cell: ({ row }) => (
+        <small className="has-text-grey is-abbr-like">
+          {row.original.English ? "true" : "false"}
+        </small>
+      ),
+    },
+    {
+      Header: useFormatMessage('Users.Hindi'),
+      accessor: 'Hindi',
+      Cell: ({ row }) => (
+        <small className="has-text-grey is-abbr-like">
+          {row.original.Hindi ? "true" : "false"}
+        </small>
+      ),
+    },
+    {
+      Header: useFormatMessage('Users.Math'),
+      accessor: 'Math',
+      Cell: ({ row }) => (
+        <small className="has-text-grey is-abbr-like">
+          {row.original.Math ? "true" : "false"}
+        </small>
+      ),
+    },
+    {
+      Header: useFormatMessage('Users.languages'),
+      accessor: 'languages',
+    },
+    {
+      Header: useFormatMessage('Users.gender'),
+      accessor: 'gender',
+    },
+    {
+      Header: useFormatMessage('Users.appLang'),
+      accessor: 'appLang',
+    },
+    {
+      Header: useFormatMessage('Users.eno'),
+      accessor: 'eno',
+    },
+    {
+      Header: useFormatMessage('Users.mobile'),
+      accessor: 'mobile',
+    },
+    {
+      Header: useFormatMessage('Users.pinCode'),
+      accessor: 'pinCode',
+    },
+    {
       Header: '',
       id: 'actions',
       accessor: 'actions',
