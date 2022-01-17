@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { useDispatch, useSelector, shallowEqual } from 'react-redux';
 import { Redirect, Link } from 'react-router-dom';
 import classNames from 'classnames';
@@ -11,6 +11,40 @@ import paths from 'pages/Router/paths';
 import ConfirmationModal from 'components/ConfirmationModal';
 import classes from './Users.module.scss';
 
+function SelectColumnFilter({
+  column: { filterValue, setFilter, preFilteredRows, id },
+}) {
+  // Calculate the options for filtering
+  // using the preFilteredRows
+  const options = useMemo(() => {
+    const options_ = new Set();
+    preFilteredRows.forEach(row => {
+      options_.add(row.values[id]);
+    });
+    return [...options_.values()];
+  }, [id, preFilteredRows]);
+
+  // Render a multi-select box
+  /* eslint-disable no-nested-ternary */
+  
+  
+  return (
+    <select
+      value={filterValue}
+      onChange={e => {
+        setFilter(e.target.value || undefined);
+      }}
+    >
+      <option value="">All</option>
+      {options.map((option, i) => (
+        <option key={i.toString()} value={option}>
+          {option}
+        </option>
+      ))}
+    </select>
+  );
+  /* eslint-enable no-nested-ternary */
+}
 const Users = () => {
   const { usersList, isAdmin, error, loading, deleted } = useSelector(
     (state) => ({
@@ -70,22 +104,24 @@ const Users = () => {
     {
       Header: useFormatMessage('Users.name'),
       accessor: 'name',
+      filter: 'fuzzyText'
     },
     {
       Header: useFormatMessage('Users.email'),
       accessor: 'email',
+      filter: 'fuzzyText',
     },
     {
       Header: useFormatMessage('Users.created'),
       accessor: 'created',
       Cell: ({ row }) => (
         <small className="has-text-grey is-abbr-like">
-          {useFormatDate(row.original.createdAt, {
+          {row.original.createdAt ? useFormatDate(row.original.createdAt.toDate(), {
             weekday: 'short',
             year: 'numeric',
             month: 'short',
             day: 'numeric',
-          })}
+          }) : "unknown"}
         </small>
       ),
     },
@@ -94,12 +130,12 @@ const Users = () => {
       accessor: 'dob',
       Cell: ({ row }) => (
         <small className="has-text-grey is-abbr-like">
-          {useFormatDate(row.original.DOB, {
+          {row.original.DOB ? useFormatDate(row.original.DOB.toDate(), {
             weekday: 'short',
             year: 'numeric',
             month: 'short',
             day: 'numeric',
-          })}
+          }) : "unknown"}
         </small>
       ),
     },
@@ -110,6 +146,8 @@ const Users = () => {
     {
       Header: useFormatMessage('Users.cbt'),
       accessor: 'cbt',
+      Filter: SelectColumnFilter,
+      filter: 'includes',
       Cell: ({ row }) => (
         <small className="has-text-grey is-abbr-like">
           {row.original.CBT ? "true" : "false"}
@@ -119,6 +157,8 @@ const Users = () => {
     {
       Header: useFormatMessage('Users.English'),
       accessor: 'English',
+      Filter: SelectColumnFilter,
+      filter: 'includes',
       Cell: ({ row }) => (
         <small className="has-text-grey is-abbr-like">
           {row.original.English ? "true" : "false"}
@@ -128,6 +168,8 @@ const Users = () => {
     {
       Header: useFormatMessage('Users.Hindi'),
       accessor: 'Hindi',
+      Filter: SelectColumnFilter,
+      filter: 'includes',
       Cell: ({ row }) => (
         <small className="has-text-grey is-abbr-like">
           {row.original.Hindi ? "true" : "false"}
@@ -137,6 +179,8 @@ const Users = () => {
     {
       Header: useFormatMessage('Users.Math'),
       accessor: 'Math',
+      Filter: SelectColumnFilter,
+      filter: 'includes',
       Cell: ({ row }) => (
         <small className="has-text-grey is-abbr-like">
           {row.original.Math ? "true" : "false"}
@@ -150,6 +194,8 @@ const Users = () => {
     {
       Header: useFormatMessage('Users.gender'),
       accessor: 'gender',
+      Filter: SelectColumnFilter,
+      filter: 'includes',
     },
     {
       Header: useFormatMessage('Users.appLang'),
