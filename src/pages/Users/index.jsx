@@ -244,13 +244,13 @@ const Users = () => {
                 <h1 className="title">{useFormatMessage('Users.users')}</h1>
               </div>
             </div>
-            <div className="level-right">
+            {/* <div className="level-right">
               <div className="level-item">
                 <Link to={paths.ADD_USER} className="button">
                   {useFormatMessage('Users.newUser')}
                 </Link>
               </div>
-            </div>
+            </div> */}
           </div>
         </div>
       </section>

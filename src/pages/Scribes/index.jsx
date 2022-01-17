@@ -7,7 +7,7 @@ import ClipLoader from 'react-spinners/ClipLoader';
 import { useFormatMessage, useFormatDate } from 'hooks';
 import Table from 'components/Table';
 import { fetchScribes, deleteScribe, ScribesCleanUp } from 'state/actions/scribes';
-import paths from 'pages/Router/paths';
+// import paths from 'pages/Router/paths';
 import ConfirmationModal from 'components/ConfirmationModal';
 import classes from './Scribes.module.scss';
 
@@ -238,13 +238,13 @@ const Scribes = () => {
                 <h1 className="title">{useFormatMessage('Scribes.Scribes')}</h1>
               </div>
             </div>
-            <div className="level-right">
+            {/* <div className="level-right">
               <div className="level-item">
                 <Link to={paths.ADD_Scribe} className="button">
                   {useFormatMessage('Scribes.newScribe')}
                 </Link>
               </div>
-            </div>
+            </div> */}
           </div>
         </div>
       </section>
