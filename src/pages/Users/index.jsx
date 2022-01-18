@@ -1,6 +1,7 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { useDispatch, useSelector, shallowEqual } from 'react-redux';
-import { Redirect, Link } from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
+// import { Link } from 'react-router-dom';
 import classNames from 'classnames';
 import ClipLoader from 'react-spinners/ClipLoader';
 
@@ -98,12 +99,12 @@ const Users = () => {
 
   const redirect = !isAdmin && <Redirect to={paths.ROOT} />;
 
-  const onRemoveButtonClickHandler = (userId) => {
-    setDeleteModal((prevState) => ({
-      userId,
-      isOpen: !prevState.isOpen,
-    }));
-  };
+  // const onRemoveButtonClickHandler = (userId) => {
+  //   setDeleteModal((prevState) => ({
+  //     userId,
+  //     isOpen: !prevState.isOpen,
+  //   }));
+  // };
 
   const onCloseModalHandler = () => {
     setDeleteModal({ userId: null, isOpen: false });
@@ -118,6 +119,15 @@ const Users = () => {
       Header: useFormatMessage('Users.name'),
       accessor: 'name',
       filter: 'fuzzyText'
+    },
+    {
+      Header: useFormatMessage('Users.uid'),
+      accessor: 'uid',
+      Cell: ({ row }) => (
+        <small className="has-text-grey is-abbr-like">
+          {row.original.id}
+        </small>
+      ),
     },
     {
       Header: useFormatMessage('Users.email'),
@@ -230,32 +240,32 @@ const Users = () => {
       Header: '',
       id: 'actions',
       accessor: 'actions',
-      Cell: ({ row }) => (
-        <>
-          {!row.original.isAdmin && (
-            <div className="buttons is-right">
-              <Link
-                to={`/users/${row.original.id}`}
-                className="button is-small is-primary"
-              >
-                <span className="icon is-small">
-                  <i className="mdi mdi-account-edit" />
-                </span>
-              </Link>
+      // Cell: ({ row }) => (
+      //   <>
+      //     {!row.original.isAdmin && (
+      //       <div className="buttons is-right">
+      //         <Link
+      //           to={`/users/${row.original.id}`}
+      //           className="button is-small is-primary"
+      //         >
+      //           <span className="icon is-small">
+      //             <i className="mdi mdi-account-edit" />
+      //           </span>
+      //         </Link>
 
-              <button
-                type="button"
-                className="button is-small is-danger"
-                onClick={() => onRemoveButtonClickHandler(row.original.id)}
-              >
-                <span className="icon is-small">
-                  <i className="mdi mdi-trash-can" />
-                </span>
-              </button>
-            </div>
-          )}
-        </>
-      ),
+      //         <button
+      //           type="button"
+      //           className="button is-small is-danger"
+      //           onClick={() => onRemoveButtonClickHandler(row.original.id)}
+      //         >
+      //           <span className="icon is-small">
+      //             <i className="mdi mdi-trash-can" />
+      //           </span>
+      //         </button>
+      //       </div>
+      //     )}
+      //   </>
+      // ),
       disableSortBy: true,
     },
   ];

@@ -3,7 +3,7 @@ import React, { useMemo } from 'react';
 import classNames from 'classnames';
 import { useTable, useSortBy, usePagination, useFilters, useGlobalFilter, useAsyncDebounce } from 'react-table';
 import PropTypes from 'prop-types';
-import {matchSorter} from 'match-sorter';
+import { matchSorter } from 'match-sorter';
 
 import { useFormatMessage } from 'hooks';
 import classes from './Table.module.scss';
@@ -15,13 +15,15 @@ function DefaultColumnFilter({
   const count = preFilteredRows.length;
 
   return (
-    <input
-      value={filterValue || ''}
-      onChange={e => {
-        setFilter(e.target.value || undefined); // Set undefined to remove the filter entirely
-      }}
-      placeholder={`Search ${count} records...`}
-    />
+    <div>
+      <input
+        value={filterValue || ''}
+        onChange={e => {
+          setFilter(e.target.value || undefined); // Set undefined to remove the filter entirely
+        }}
+        placeholder={`Search ${count} records...`}
+      />
+    </div>
   );
 }
 
