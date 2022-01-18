@@ -11,6 +11,15 @@ import paths from 'pages/Router/paths';
 import ConfirmationModal from 'components/ConfirmationModal';
 import classes from './Users.module.scss';
 
+function sanitizeOption(value) {
+  if (typeof value === "string") {
+    return value;
+  }
+  if (typeof value === "boolean") {
+    return (value ? "true" : "false");
+  }
+  return "unknown";
+}
 function SelectColumnFilter({
   column: { filterValue, setFilter, preFilteredRows, id },
 }) {
@@ -20,7 +29,11 @@ function SelectColumnFilter({
     const options_ = new Set();
     preFilteredRows.forEach(row => {
       options_.add(row.values[id]);
+
     });
+    /* eslint-disable no-console */
+    console.log(options_);
+    /* eslint-enable no-console */
     return [...options_.values()];
   }, [id, preFilteredRows]);
 
@@ -37,8 +50,8 @@ function SelectColumnFilter({
     >
       <option value="">All</option>
       {options.map((option, i) => (
-        <option key={i.toString()} value={option}>
-          {option}
+        <option key={i.toString()} value={sanitizeOption(option)}>
+          {sanitizeOption(option)}
         </option>
       ))}
     </select>
@@ -116,7 +129,7 @@ const Users = () => {
       accessor: 'created',
       Cell: ({ row }) => (
         <small className="has-text-grey is-abbr-like">
-          {row.original.createdAt ? useFormatDate(row.original.createdAt.toDate(), {
+          {row.original.createdAt ? useFormatDate(new Date(row.original.createdAt.seconds * 1000), {
             weekday: 'short',
             year: 'numeric',
             month: 'short',
@@ -130,7 +143,7 @@ const Users = () => {
       accessor: 'dob',
       Cell: ({ row }) => (
         <small className="has-text-grey is-abbr-like">
-          {row.original.DOB ? useFormatDate(row.original.DOB.toDate(), {
+          {row.original.DOB ? useFormatDate(new Date(row.original.DOB.seconds * 1000), {
             weekday: 'short',
             year: 'numeric',
             month: 'short',
@@ -147,7 +160,7 @@ const Users = () => {
       Header: useFormatMessage('Users.cbt'),
       accessor: 'cbt',
       Filter: SelectColumnFilter,
-      filter: 'includes',
+      filter: 'exactTextCase',
       Cell: ({ row }) => (
         <small className="has-text-grey is-abbr-like">
           {row.original.CBT ? "true" : "false"}
@@ -158,7 +171,7 @@ const Users = () => {
       Header: useFormatMessage('Users.English'),
       accessor: 'English',
       Filter: SelectColumnFilter,
-      filter: 'includes',
+      filter: 'exactTextCase',
       Cell: ({ row }) => (
         <small className="has-text-grey is-abbr-like">
           {row.original.English ? "true" : "false"}
@@ -169,7 +182,7 @@ const Users = () => {
       Header: useFormatMessage('Users.Hindi'),
       accessor: 'Hindi',
       Filter: SelectColumnFilter,
-      filter: 'includes',
+      filter: 'exactTextCase',
       Cell: ({ row }) => (
         <small className="has-text-grey is-abbr-like">
           {row.original.Hindi ? "true" : "false"}
@@ -180,7 +193,7 @@ const Users = () => {
       Header: useFormatMessage('Users.Math'),
       accessor: 'Math',
       Filter: SelectColumnFilter,
-      filter: 'includes',
+      filter: 'exactTextCase',
       Cell: ({ row }) => (
         <small className="has-text-grey is-abbr-like">
           {row.original.Math ? "true" : "false"}
@@ -195,7 +208,7 @@ const Users = () => {
       Header: useFormatMessage('Users.gender'),
       accessor: 'gender',
       Filter: SelectColumnFilter,
-      filter: 'includes',
+      filter: 'exactTextCase',
     },
     {
       Header: useFormatMessage('Users.appLang'),

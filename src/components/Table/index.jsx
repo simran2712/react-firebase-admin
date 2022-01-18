@@ -3,7 +3,7 @@ import React, { useMemo } from 'react';
 import classNames from 'classnames';
 import { useTable, useSortBy, usePagination, useFilters, useGlobalFilter, useAsyncDebounce } from 'react-table';
 import PropTypes from 'prop-types';
-import * as matchSorter from 'match-sorter';
+import {matchSorter} from 'match-sorter';
 
 import { useFormatMessage } from 'hooks';
 import classes from './Table.module.scss';
