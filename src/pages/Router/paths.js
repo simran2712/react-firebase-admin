@@ -9,6 +9,7 @@ export default {
   REQUESTS: '/requests',
   ADD_REQUEST: '/requests/new',
   PROFILE: '/profile',
+  SCRIBE_CANCELLATION:'/scribe-cancellation',
   RESET_PASSWORD: '/recover-password',
   SECTION: '/section',
   SUBMENU_1: '/submenu1',

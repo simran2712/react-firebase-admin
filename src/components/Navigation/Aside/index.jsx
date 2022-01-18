@@ -56,6 +56,7 @@ const Aside = ({ handleMobileToggle }) => {
   const usersMessage = useFormatMessage('Aside.users');
   const scribesMessage = useFormatMessage('Aside.scribes');
   const requestsMessage = useFormatMessage('Aside.requests');
+  const scribeCancellationMessage=useFormatMessage('Aside.scribeCancellation');
 
   return (
     <aside className="aside is-placed-left is-expanded">
@@ -118,6 +119,18 @@ const Aside = ({ handleMobileToggle }) => {
                   <i className="mdi mdi-account-supervisor" />
                 </span>
                 <span className="menu-item-label">{requestsMessage}</span>
+              </NavLink>
+            </li>
+            <li>
+              <NavLink
+                to={paths.SCRIBE_CANCELLATION}
+                className="has-icon"
+                onClick={handleMobileToggle}
+              >
+                <span className="icon">
+                  <i className="mdi mdi-account-supervisor" />
+                </span>
+                <span className="menu-item-label">{scribeCancellationMessage}</span>
               </NavLink>
             </li>
             </>

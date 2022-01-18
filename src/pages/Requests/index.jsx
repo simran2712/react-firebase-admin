@@ -64,14 +64,14 @@ const Requests = () => {
 
   const columns = [
     
-    {
-      Header: useFormatMessage('Requests.name'),
-      accessor: 'name',
-    },
-    {
-      Header: useFormatMessage('Requests.email'),
-      accessor: 'email',
-    },
+    // {
+    //   Header: useFormatMessage('Requests.name'),
+    //   accessor: 'name',
+    // },
+    // {
+    //   Header: useFormatMessage('Requests.email'),
+    //   accessor: 'email',
+    // },
     {
       Header: useFormatMessage('Requests.created'),
       accessor: 'created',
@@ -83,6 +83,110 @@ const Requests = () => {
             month: 'short',
             day: 'numeric',
           })}
+        </small>
+      ),
+    },
+    {
+      Header: useFormatMessage('Requests.examAddress'),
+      accessor: 'Exam Address',
+      Cell: ({ row }) => (
+        <small className="has-text-grey is-abbr-like">
+          {row.original.examAddress}
+        </small>
+      ),
+    },
+    {
+      Header: useFormatMessage('Requests.examDate'),
+      accessor: 'Exam Date',
+      Cell: ({ row }) => (
+        <small className="has-text-grey is-abbr-like">
+          {useFormatDate(row.original.examDate, {
+            weekday: 'short',
+            year: 'numeric',
+            month: 'short',
+            day: 'numeric',
+          })}
+        </small>
+      ),
+    },
+    {
+      Header: useFormatMessage('Requests.dateSlot'),
+      accessor: 'Date Slot',
+      Cell: ({ row }) => (
+        <small className="has-text-grey is-abbr-like">
+          {row.original.dateSlot}
+        </small>
+      ),
+    },
+    {
+      Header: useFormatMessage('Requests.examName'),
+      accessor: 'Exam Name',
+      Cell: ({ row }) => (
+        <small className="has-text-grey is-abbr-like">
+          {row.original.examName}
+        </small>
+      ),
+    },
+    {
+      Header: useFormatMessage('Requests.examPinCode'),
+      accessor: 'Exam PinCode',
+      Cell: ({ row }) => (
+        <small className="has-text-grey is-abbr-like">
+          {row.original.examPinCode}
+        </small>
+      ),
+    },
+    {
+      Header: useFormatMessage('Requests.cbt'),
+      accessor: 'cbt',
+      Cell: ({ row }) => (
+        <small className="has-text-grey is-abbr-like">
+          {row.original.CBT ? "true" : "false"}
+        </small>
+      ),
+    },
+    {
+      Header: useFormatMessage('Requests.English'),
+      accessor: 'English',
+      Cell: ({ row }) => (
+        <small className="has-text-grey is-abbr-like">
+          {row.original.English ? "true" : "false"}
+        </small>
+      ),
+    },
+    {
+      Header: useFormatMessage('Requests.Hindi'),
+      accessor: 'Hindi',
+      Cell: ({ row }) => (
+        <small className="has-text-grey is-abbr-like">
+          {row.original.Hindi ? "true" : "false"}
+        </small>
+      ),
+    },
+    {
+      Header: useFormatMessage('Requests.status'),
+      accessor: 'Status',
+      Cell: ({ row }) => (
+        <small className="has-text-grey is-abbr-like">
+          {row.original.status}
+        </small>
+      ),
+    },
+    {
+      Header: useFormatMessage('Requests.volunteerAccepted'),
+      accessor: 'Volunteer Accepted',
+      Cell: ({ row }) => (
+        <small className="has-text-grey is-abbr-like">
+          {row.original.volunteerAccepted}
+        </small>
+      ),
+    },
+    {
+      Header: useFormatMessage('Requests.volunteerSelected'),
+      accessor: 'Volunteer Selected',
+      Cell: ({ row }) => (
+        <small className="has-text-grey is-abbr-like">
+          {row.original.volunteersSelected}
         </small>
       ),
     },
