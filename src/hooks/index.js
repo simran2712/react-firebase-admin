@@ -25,7 +25,7 @@ const useFormatDate = (value, options = {}) => {
   const intl = useIntl();
   
   /* eslint-disable no-console */
-  console.log(value);
+  // console.log(value);
   /* eslint-enable no-console */
   return intl.formatDate(value, options);
 };

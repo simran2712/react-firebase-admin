@@ -70,6 +70,15 @@ const Cancellations=()=>{
             </small>
           ),
       },
+      {
+        Header: useFormatMessage('Scribe_Cancellation.reason'),
+        accessor: 'Reason',
+        Cell: ({ row }) => (
+          <small className="has-text-grey is-abbr-like">
+            {row.original.reason}
+          </small>
+        ),
+      },
   ];
   const data = search
     ? CancellationsList.filter((el) => {
@@ -81,6 +90,7 @@ const Cancellations=()=>{
         );
       })
     : CancellationsList;
+    console.log(data);
 
     const deleteMessage = useFormatMessage('Cancellations.delete');
 
@@ -110,13 +120,13 @@ const Cancellations=()=>{
           <div className="level">
             <div className="level-left">
               <div className="level-item">
-                <h1 className="title">{useFormatMessage('Requests.Requests')}</h1>
+                <h1 className="title">{useFormatMessage('Cancellations.Cancellations')}</h1>
               </div>
             </div>
             <div className="level-right">
               <div className="level-item">
                 <Link to={paths.ADD_REQUEST} className="button">
-                  {useFormatMessage('Requests.newRequest')}
+                  {useFormatMessage('Cancellations.newCancellation')}
                 </Link>
               </div>
             </div>
