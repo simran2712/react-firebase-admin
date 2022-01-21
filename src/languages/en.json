@@ -126,7 +126,7 @@
   "Scribe_Cancellation.dateSlot":"Date Slot",
   "Scribe_Cancellation.reason":"Reason",
   "Scribe_Cancellation.reqId":"Req_Id",
-  "Scribe_Cancellation.uid":"uid",
+  "Scribe_Cancellation.uid":"UID",
   "NavBar.profile": "Profile",
   "NavBar.logOut": "Log Out",
   "NavBar.Language": "English",

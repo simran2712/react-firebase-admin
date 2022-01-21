@@ -50,7 +50,7 @@ export const fetchCancellations = (cancellationId = '') => {
       let cancellation;
       try {
 
-        cancellation = await fetchDocument('cancellations', cancellationId);
+        cancellation = await fetchDocument('scribe_cancellations', cancellationId);
         
       } catch (error) {
         /* eslint-disable no-console */
@@ -80,7 +80,7 @@ export const fetchCancellations = (cancellationId = '') => {
     let cancellations;
 
     try {
-        cancellations = await fetchCollection('cancellations');
+        cancellations = await fetchCollection('scribe_cancellations');
     } catch (error) {
       /* eslint-disable no-console */
       console.log("error fetching cancellation collec, ", error);
@@ -101,8 +101,8 @@ const deleteLogo = (oldLogo) => {
   if (!oldLogo.includes('firebasestorage')) {
     return null;
   }
-  const logoPath = oldLogo.split('cancellations%2F').pop().split('?alt=media').shift();
-  return firebase.storage().ref(`cancellations/${logoPath}`).delete();
+  const logoPath = oldLogo.split('scribe_cancellations%2F').pop().split('?alt=media').shift();
+  return firebase.storage().ref(`scribe_cancellations/${logoPath}`).delete();
 };
 
 export const deletecancellation = (id) => {
@@ -115,7 +115,7 @@ export const deletecancellation = (id) => {
 
     const deleteLogoTask = logoUrl ? deleteLogo(logoUrl) : null;
 
-    const deleteUserTask = deleteDocument('cancellations', id);
+    const deleteUserTask = deleteDocument('scribe_cancellations', id);
 
     try {
       await Promise.all([deleteLogoTask, deleteUserTask]);
@@ -147,7 +147,7 @@ const uploadLogo = (uid, file) => {
 
   const fileName = `${uid}.${fileExtension}`;
 
-  return storageRef.child(`cancellations/${fileName}`).put(file);
+  return storageRef.child(`scribe_cancellations/${fileName}`).put(file);
 };
 
 const getLogoUrl = (uid, file) => {

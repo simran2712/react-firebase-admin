@@ -23,7 +23,7 @@ const Cancellations=()=>{
       );
 
       const [deleteModal, setDeleteModal] = useState({
-        CancellationId: null,
+        cancellationId: null,
         isOpen: false,
       });
 
@@ -39,25 +39,25 @@ const Cancellations=()=>{
   useEffect(() => {
     if (deleted && !loading) {
       setDeleteModal((prevState) => ({
-        CancellationId: null,
+        cancellationId: null,
         isOpen: !prevState.isOpen,
       }));
     }
   }, [deleted, loading]);
 
-//   const onRemoveButtonClickHandler = (CancellationId) => {
+//   const onRemoveButtonClickHandler = (cancellationId) => {
 //     setDeleteModal((prevState) => ({
-//       CancellationId,
+//       cancellationId,
 //       isOpen: !prevState.isOpen,
 //     }));
 //   };
 
   const onCloseModalHandler = () => {
-    setDeleteModal({ CancellationId: null, isOpen: false });
+    setDeleteModal({ cancellationId: null, isOpen: false });
   };
 
   const onDeleteCancellationHandler = () => {
-    dispatch(deletecancellation(deleteModal.CancellationId));
+    dispatch(deletecancellation(deleteModal.cancellationId));
   };
 
   const columns =[
@@ -76,6 +76,24 @@ const Cancellations=()=>{
         Cell: ({ row }) => (
           <small className="has-text-grey is-abbr-like">
             {row.original.reason}
+          </small>
+        ),
+      },
+      {
+        Header: useFormatMessage('Scribe_Cancellation.reqId'),
+        accessor: 'Req_ID',
+        Cell: ({ row }) => (
+          <small className="has-text-grey is-abbr-like">
+            {row.original.req_id}
+          </small>
+        ),
+      },
+      {
+        Header: useFormatMessage('Scribe_Cancellation.uid'),
+        accessor: 'Uid',
+        Cell: ({ row }) => (
+          <small className="has-text-grey is-abbr-like">
+            {row.original.uid}
           </small>
         ),
       },
@@ -120,13 +138,13 @@ const Cancellations=()=>{
           <div className="level">
             <div className="level-left">
               <div className="level-item">
-                <h1 className="title">{useFormatMessage('Cancellations.Cancellations')}</h1>
+                <h1 className="title">{useFormatMessage('Scribe Cancellations')}</h1>
               </div>
             </div>
             <div className="level-right">
               <div className="level-item">
                 <Link to={paths.ADD_REQUEST} className="button">
-                  {useFormatMessage('Cancellations.newCancellation')}
+                  {useFormatMessage('New Scribe Cancellation')}
                 </Link>
               </div>
             </div>
@@ -137,7 +155,7 @@ const Cancellations=()=>{
         <div className="card has-table has-mobile-sort-spaced">
           <header className="card-header">
             <p className={classNames('card-header-title', classes.tableHeader)}>
-              <span>{useFormatMessage('Cancellations.search')}</span>
+              <span>{useFormatMessage('Search')}</span>
               <input
                 type="text"
                 className="input"
