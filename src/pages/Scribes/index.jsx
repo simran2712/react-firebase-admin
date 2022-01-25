@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { useDispatch, useSelector, shallowEqual } from 'react-redux';
-// import { Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import classNames from 'classnames';
 import ClipLoader from 'react-spinners/ClipLoader';
 
@@ -230,33 +230,41 @@ const Scribes = () => {
       accessor: 'pinCode',
     },
     {
-      Header: '',
+      Header: useFormatMessage('Scribes.reviews'),
       id: 'actions',
       accessor: 'actions',
-      // Cell: ({ row }) => (
-      //   <>
-      //     <div className="buttons is-right">
-      //       <Link
-      //         to={`/Scribes/${row.original.id}`}
-      //         className="button is-small is-primary"
-      //       >
-      //         <span className="icon is-small">
-      //           <i className="mdi mdi-account-edit" />
-      //         </span>
-      //       </Link>
+      Cell: ({ row }) => (
+        <>
+          <div className="buttons is-right">
+            <Link
+              to={`/scribes/${row.original.id}`}
+              className="button"
+            >
+              <span className="icon is-small">
+                <i className="mdi mdi-account-edit" />
+              </span>
+            </Link>
+            {/* <Link
+              to={`/Scribes/${row.original.id}`}
+              className="button is-small is-primary"
+            >
+              <span className="icon is-small">
+                <i className="mdi mdi-account-edit" />
+              </span>
+            </Link>
 
-      //       <button
-      //         type="button"
-      //         className="button is-small is-danger"
-      //         onClick={() => onRemoveButtonClickHandler(row.original.id)}
-      //       >
-      //         <span className="icon is-small">
-      //           <i className="mdi mdi-trash-can" />
-      //         </span>
-      //       </button>
-      //     </div>
-      //   </>
-      // ),
+            <button
+              type="button"
+              className="button is-small is-danger"
+              onClick={() => onRemoveButtonClickHandler(row.original.id)}
+            >
+              <span className="icon is-small">
+                <i className="mdi mdi-trash-can" />
+              </span>
+            </button> */}
+          </div>
+        </>
+      ),
       disableSortBy: true,
     },
   ];

@@ -6,6 +6,7 @@ import Home from 'pages/Home';
 import Users from 'pages/Users';
 import Cancellations from 'pages/ScribeCancellations';
 import Scribes from 'pages/Scribes';
+import Reviews from 'pages/Reviews';
 import Requests from 'pages/Requests';
 import Profile from 'pages/Profile';
 import ResetPassword from 'pages/ResetPassword';
@@ -27,6 +28,7 @@ const RouterComponent = () => {
         <PrivateRoute path={paths.USERS} component={Users} />
         <PrivateRoute path={paths.USERS} component={Users} />
         <PrivateRoute path={paths.USERS} component={Users} />
+        <PrivateRoute path={paths.SCRIBE_REVIEW} component={Reviews} />
         <PrivateRoute path={paths.SCRIBES} component={Scribes} />
         <PrivateRoute path={paths.REQUESTS} component={Requests} />
         <PrivateRoute path={paths.SCRIBE_CANCELLATION} component={Cancellations} />

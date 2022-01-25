@@ -6,6 +6,7 @@ export default {
   MODIFY_USER: '/users/:id',
   SCRIBES: '/scribes',
   ADD_SCRIBE: '/scribes/new',
+  SCRIBE_REVIEW: '/scribes/:id',
   REQUESTS: '/requests',
   ADD_REQUEST: '/requests/new',
   PROFILE: '/profile',

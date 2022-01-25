@@ -7,6 +7,7 @@ import { authReducer } from './auth';
 import { usersReducer } from './users';
 import { scribesReducer } from './scribes';
 import { cancellationsReducer } from './scribeCancellation';
+import { reviewsReducer } from './reviews';
 import { preferencesReducer } from './preferences';
 import { requestsReducer } from './requests';
 
@@ -54,6 +55,14 @@ export default combineReducers({
       blacklist: ['error', 'loading']
     },
     requestsReducer
+  ),
+  Reviews: reviewsReducer(
+    {
+      key: 'Reviews',
+      storage,
+      blacklist: ['error', 'loading']
+    },
+    reviewsReducer
   ),
   toastr: toastrReducer,
 });
