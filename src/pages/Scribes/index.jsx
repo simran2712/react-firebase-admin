@@ -11,6 +11,8 @@ import { fetchScribes, deleteScribe, ScribesCleanUp } from 'state/actions/scribe
 import ConfirmationModal from 'components/ConfirmationModal';
 import classes from './Scribes.module.scss';
 
+// export const { scribesData } = useSelector((state) => ({scribesData: state.Scribes.data}));
+
 function sanitizeOption(value) {
   if (typeof value === "string") {
     return value;

@@ -40,17 +40,17 @@ export const REVIEWS_CLEAN_UP = createAction('REVIEWS_CLEAN_UP');
 
 export const REVIEWS_CLEAR_DATA_LOGOUT = createAction('REVIEWS_CLEAR_DATA_LOGOUT');
 
-export const fetchReviews = (reviewId = '') => {
+export const fetchReviews = (scribeId = '') => {
   return async (dispatch, getState) => {
     dispatch(checkUserData());
 
     dispatch(REVIEWS_FETCH_DATA_INIT());
 
-    if (reviewId) {
+    if (scribeId) {
       let review;
       try {
 
-        review = await fetchDocument('reviews', reviewId);
+        review = await fetchDocument('reviews', scribeId);
         
       } catch (error) {
         /* eslint-disable no-console */
@@ -67,7 +67,7 @@ export const fetchReviews = (reviewId = '') => {
       }
       
       const reviews = getState().reviews.data;
-      reviews.push(review);
+      // reviews.push(review);
       
       return dispatch(
         REVIEWS_FETCH_DATA_SUCCESS({

@@ -9,6 +9,7 @@ import Table from 'components/Table';
 import { fetchCancellations, deletecancellation, CancellationsCleanUp } from 'state/actions/scribeCancellation';
 import paths from 'pages/Router/paths';
 import ConfirmationModal from 'components/ConfirmationModal';
+// import { scribesData } from 'pages/Scribes';
 import classes from './ScribeCancellations.module.scss';
 
 const Cancellations=()=>{
@@ -60,6 +61,19 @@ const Cancellations=()=>{
     dispatch(deletecancellation(deleteModal.cancellationId));
   };
 
+  // const sdata = scribesData;
+
+  // const getScribeName = (uid) => {
+  //   let name = "";
+  //   for (let i = 0; i < sdata.length; i += 1) {
+  //     if (sdata[i].id === uid) {
+  //       name = sdata[i].name;
+  //       break;
+  //     }
+  //   }
+  //   return name;
+  // };
+
   const columns =[
     {
         Header: useFormatMessage('Scribe_Cancellation.dateSlot'),
@@ -70,6 +84,15 @@ const Cancellations=()=>{
             </small>
           ),
       },
+      // {
+      //   Header: useFormatMessage('Scribes.name'),
+      //   accessor: 'name',
+      //   Cell: ({ row }) => (
+      //     <small className="has-text-grey is-abbr-like">
+      //       {getScribeName(row.original.uid)}
+      //     </small>
+      //   ),
+      // },
       {
         Header: useFormatMessage('Scribe_Cancellation.reason'),
         accessor: 'Reason',

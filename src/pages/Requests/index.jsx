@@ -4,7 +4,8 @@ import { Link } from 'react-router-dom';
 import classNames from 'classnames';
 import ClipLoader from 'react-spinners/ClipLoader';
 
-import { useFormatMessage, useFormatDate } from 'hooks';
+import { useFormatMessage } from 'hooks';
+// import { useFormatDate } from 'hooks';
 import Table from 'components/Table';
 import { fetchRequests, deleteRequest, RequestsCleanUp } from 'state/actions/requests';
 import paths from 'pages/Router/paths';
@@ -62,6 +63,21 @@ const Requests = () => {
     dispatch(deleteRequest(deleteModal.RequestId));
   };
 
+  const mergeListWithCommas = (list) => {
+    let str = "";
+
+    if (list) {
+      for (let i = 0; i < list.length; i += 1) {
+        str += list[i];
+        if (i < (list.length - 1)) {
+          str += ", ";
+        }
+      }
+    }
+
+    return str;
+  };
+
   const columns = [
     
     // {
@@ -72,20 +88,20 @@ const Requests = () => {
     //   Header: useFormatMessage('Requests.email'),
     //   accessor: 'email',
     // },
-    {
-      Header: useFormatMessage('Requests.created'),
-      accessor: 'created',
-      Cell: ({ row }) => (
-        <small className="has-text-grey is-abbr-like">
-          {useFormatDate(row.original.createdAt, {
-            weekday: 'short',
-            year: 'numeric',
-            month: 'short',
-            day: 'numeric',
-          })}
-        </small>
-      ),
-    },
+    // {
+    //   Header: useFormatMessage('Requests.created'),
+    //   accessor: 'created',
+    //   Cell: ({ row }) => (
+    //     <small className="has-text-grey is-abbr-like">
+    //       {row.original.createdAt ? useFormatDate(new Date(row.original.createdAt.seconds * 1000), {
+    //         weekday: 'short',
+    //         year: 'numeric',
+    //         month: 'short',
+    //         day: 'numeric',
+    //       }) : "unknown"}
+    //     </small>
+    //   ),
+    // },
     {
       Header: useFormatMessage('Requests.examAddress'),
       accessor: 'Exam Address',
@@ -95,20 +111,20 @@ const Requests = () => {
         </small>
       ),
     },
-    {
-      Header: useFormatMessage('Requests.examDate'),
-      accessor: 'Exam Date',
-      Cell: ({ row }) => (
-        <small className="has-text-grey is-abbr-like">
-          {useFormatDate(row.original.examDate, {
-            weekday: 'short',
-            year: 'numeric',
-            month: 'short',
-            day: 'numeric',
-          })}
-        </small>
-      ),
-    },
+    // {
+    //   Header: useFormatMessage('Requests.examDate'),
+    //   accessor: 'examDate',
+    //   Cell: ({ row }) => (
+    //     <small className="has-text-grey is-abbr-like">
+    //       {row.original.examDate ? useFormatDate(new Date(row.original.examDate.seconds * 1000), {
+    //         weekday: 'short',
+    //         year: 'numeric',
+    //         month: 'short',
+    //         day: 'numeric',
+    //       }) : "unknown"}
+    //     </small>
+    //   ),
+    // },
     {
       Header: useFormatMessage('Requests.dateSlot'),
       accessor: 'Date Slot',
@@ -186,7 +202,7 @@ const Requests = () => {
       accessor: 'Volunteer Selected',
       Cell: ({ row }) => (
         <small className="has-text-grey is-abbr-like">
-          {row.original.volunteersSelected}
+          {mergeListWithCommas(row.original.volunteersSelected)}
         </small>
       ),
     },
