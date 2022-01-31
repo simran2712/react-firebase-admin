@@ -10,6 +10,7 @@ import Table from 'components/Table';
 import { fetchReviews, deleteReview, ReviewsCleanUp } from 'state/actions/reviews';
 // import paths from 'pages/Router/paths';
 import ConfirmationModal from 'components/ConfirmationModal';
+import { useParams } from 'react-router-dom';
 import classes from './Reviews.module.scss';
 
 // function sanitizeOption(value) {
@@ -61,6 +62,8 @@ import classes from './Reviews.module.scss';
 // }
 
 const Reviews = () => {
+  const { id } = useParams();
+
   const { reviewsList, error, loading, deleted } = useSelector(
     (state) => ({
       reviewsList: state.Reviews.data,
@@ -81,7 +84,7 @@ const Reviews = () => {
   const [search, setSearch] = useState('');
 
   useEffect(() => {
-    dispatch(fetchReviews());
+    dispatch(fetchReviews(id));
     return () => dispatch(ReviewsCleanUp());
   }, [dispatch]);
 
@@ -124,12 +127,19 @@ const Reviews = () => {
       accessor: 'rating',
       Cell: ({ row }) => (
         <small className="has-text-grey is-abbr-like">
-          {row.original.rating}
+          {`${row.original.rating.value}`}
         </small>
       ),
     },
   ];
 
+  
+  /* eslint-disable no-console */
+  console.log("reviews, ", reviewsList);
+  console.log("error, ", error);
+  console.log("loading, ", loading);
+  console.log("deleted, ", deleted);
+  /* eslint-enable no-console */
   const data = search
     ? reviewsList.filter((el) => {
         const clonedElem = { ...el };
