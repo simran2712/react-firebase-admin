@@ -4,6 +4,7 @@ import {
   fetchCollection,
   fetchDocument,
   updateDocument,
+  fetchReviewsSubcollection,
 } from './firestore';
 
 export {
@@ -12,4 +13,5 @@ export {
   fetchCollection,
   fetchDocument,
   updateDocument,
+  fetchReviewsSubcollection,
 };

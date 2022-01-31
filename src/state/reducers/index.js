@@ -56,7 +56,7 @@ export default combineReducers({
     },
     requestsReducer
   ),
-  Reviews: reviewsReducer(
+  Reviews: persistReducer(
     {
       key: 'Reviews',
       storage,

@@ -39,6 +39,19 @@ export const fetchCollection = async (collection, options = {}) => {
   return data;
 };
 
+export const fetchReviewsSubcollection = async (scribeId) => {
+  const data = [];
+  const baseQuery = firebase.firestore().collection('scribes').doc(scribeId).collection('reviews');
+
+  (await baseQuery.get()).forEach((doc) =>
+    data.push({ id: doc.id, ...doc.data() })
+  );
+  /* eslint-disable no-console */
+  console.log("fetched data from firestore, ", data);
+  /* eslint-enable no-console */
+  return data;
+};
+
 export const deleteDocument = (collection, id) => {
   return getFirestoreRef(collection).doc(id).delete();
 };

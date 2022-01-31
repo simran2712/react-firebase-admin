@@ -61,9 +61,9 @@ import classes from './Reviews.module.scss';
 // }
 
 const Reviews = () => {
-  const { ReviewsList, error, loading, deleted } = useSelector(
+  const { reviewsList, error, loading, deleted } = useSelector(
     (state) => ({
-      ReviewsList: state.Reviews.data,
+      reviewsList: state.Reviews.data,
       error: state.Reviews.error,
       loading: state.Reviews.loading,
       deleted: state.Reviews.deleted,
@@ -111,7 +111,7 @@ const Reviews = () => {
 
   const columns = [
     {
-      Header: useFormatMessage('Reviews.uid'),
+      Header: 'uid',
       accessor: 'uid',
       Cell: ({ row }) => (
         <small className="has-text-grey is-abbr-like">
@@ -122,11 +122,16 @@ const Reviews = () => {
     {
       Header: useFormatMessage('Reviews.rating'),
       accessor: 'rating',
+      Cell: ({ row }) => (
+        <small className="has-text-grey is-abbr-like">
+          {row.original.rating}
+        </small>
+      ),
     },
   ];
 
   const data = search
-    ? ReviewsList.filter((el) => {
+    ? reviewsList.filter((el) => {
         const clonedElem = { ...el };
         delete clonedElem.id;
         delete clonedElem.logoUrl;
@@ -134,7 +139,7 @@ const Reviews = () => {
           String(field).toLowerCase().includes(search.toLowerCase())
         );
       })
-    : ReviewsList;
+    : reviewsList;
 
   const deleteMessage = useFormatMessage('Reviews.delete');
 

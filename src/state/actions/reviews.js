@@ -5,12 +5,12 @@ import { firebaseError } from 'utils';
 import firebase from 'firebase.js';
 import { checkUserData, AUTH_UPDATE_USER_DATA } from './auth';
 import {
-  fetchCollection,
-  fetchDocument,
   createDocument,
   deleteDocument,
   updateDocument,
+  fetchReviewsSubcollection,
 } from '../api';
+
 
 export const REVIEWS_FETCH_DATA_INIT = createAction('REVIEWS_FETCH_DATA_INIT');
 export const REVIEWS_FETCH_DATA_SUCCESS = createAction(
@@ -41,59 +41,29 @@ export const REVIEWS_CLEAN_UP = createAction('REVIEWS_CLEAN_UP');
 export const REVIEWS_CLEAR_DATA_LOGOUT = createAction('REVIEWS_CLEAR_DATA_LOGOUT');
 
 export const fetchReviews = (scribeId = '') => {
-  return async (dispatch, getState) => {
+  return async (dispatch) => {
     dispatch(checkUserData());
 
     dispatch(REVIEWS_FETCH_DATA_INIT());
 
-    if (scribeId) {
-      let review;
-      try {
+    
+    let reviews;
+    try {
 
-        review = await fetchDocument('reviews', scribeId);
-        
-      } catch (error) {
-        /* eslint-disable no-console */
-        console.log("error fetching review doc, ", error);
-        /* eslint-enable no-console */
-        toastr.error('cant fetch review doc', error);
-        return dispatch(REVIEWS_FETCH_DATA_FAIL({ error }));
-      }
+      reviews = await fetchReviewsSubcollection(scribeId);
       
-      if (!review) {
-        const errorMessage = 'User not available';
-        toastr.error('Cant get the current review', errorMessage);
-        return dispatch(REVIEWS_FETCH_DATA_FAIL({ error: errorMessage }));
-      }
-      
-      const reviews = getState().reviews.data;
-      // reviews.push(review);
-      
-      return dispatch(
-        REVIEWS_FETCH_DATA_SUCCESS({
-          data: reviews,
-        })
-        );
+    } catch (error) {
+
+      return dispatch(REVIEWS_FETCH_DATA_FAIL({ error }));
+
     }
     
-
-    let reviews;
-
-    try {
-        reviews = await fetchCollection('reviews');
-    } catch (error) {
-      /* eslint-disable no-console */
-      console.log("error fetching review collec, ", error);
-      /* eslint-enable no-console */
-      toastr.error('Cant get the reviews collection', error);
-      return dispatch(REVIEWS_FETCH_DATA_FAIL({ error }));
-    }
-
+    
     return dispatch(
-        REVIEWS_FETCH_DATA_SUCCESS({
+      REVIEWS_FETCH_DATA_SUCCESS({
         data: reviews,
-      })
-    );
+      }));
+    
   };
 };
 
