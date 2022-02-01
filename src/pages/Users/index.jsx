@@ -237,37 +237,14 @@ const Users = () => {
       accessor: 'pinCode',
     },
     {
-      Header: '',
-      id: 'actions',
-      accessor: 'actions',
-      // Cell: ({ row }) => (
-      //   <>
-      //     {!row.original.isAdmin && (
-      //       <div className="buttons is-right">
-      //         <Link
-      //           to={`/users/${row.original.id}`}
-      //           className="button is-small is-primary"
-      //         >
-      //           <span className="icon is-small">
-      //             <i className="mdi mdi-account-edit" />
-      //           </span>
-      //         </Link>
-
-      //         <button
-      //           type="button"
-      //           className="button is-small is-danger"
-      //           onClick={() => onRemoveButtonClickHandler(row.original.id)}
-      //         >
-      //           <span className="icon is-small">
-      //             <i className="mdi mdi-trash-can" />
-      //           </span>
-      //         </button>
-      //       </div>
-      //     )}
-      //   </>
-      // ),
-      disableSortBy: true,
+      Header: 'Identity document',
+      accessor: 'identityDocURL',
     },
+    {
+      Header: 'Disability document',
+      accessor: 'disabCertURL',
+    },
+    
   ];
 
   const data = search

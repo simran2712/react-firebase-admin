@@ -70,7 +70,7 @@ const Requests = () => {
       for (let i = 0; i < list.length; i += 1) {
         str += list[i];
         if (i < (list.length - 1)) {
-          str += ", ";
+          str += " ";
         }
       }
     }
@@ -205,6 +205,10 @@ const Requests = () => {
           {mergeListWithCommas(row.original.volunteersSelected)}
         </small>
       ),
+    },
+    {
+      Header: "exam document",
+      accessor: "examDocURL"
     },
     {
       Header: '',
