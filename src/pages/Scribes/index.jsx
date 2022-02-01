@@ -232,6 +232,20 @@ const Scribes = () => {
       accessor: 'pinCode',
     },
     {
+      Header: 'Identity document',
+      accessor: 'IdentityDocURL',
+      Cell: ({row}) => (
+        row.original.identityDocURL ? <a href={row.original.identityDocURL} target='_blank' rel="noreferrer">Open File</a> : null
+      ),
+    },
+    {
+      Header: 'Education document',
+      accessor: 'eduCertURL',
+      Cell: ({row}) => (
+        row.original.eduCertURL ? <a href={row.original.eduCertURL} target='_blank' rel="noreferrer">Open File</a> : null
+      ),
+    },
+    {
       Header: useFormatMessage('Scribes.reviews'),
       id: 'actions',
       accessor: 'actions',

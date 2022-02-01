@@ -208,7 +208,10 @@ const Requests = () => {
     },
     {
       Header: "exam document",
-      accessor: "examDocURL"
+      accessor: "examDocURL",
+      Cell: ({row}) => (
+        row.original.examDocURL ? <a href={row.original.examDocURL} target='_blank' rel="noreferrer">Open File</a> : null
+      ),
     },
     {
       Header: '',

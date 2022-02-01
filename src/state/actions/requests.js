@@ -72,8 +72,7 @@ export const fetchRequests = (requestId = '') => {
       return dispatch(
         REQUESTS_FETCH_DATA_SUCCESS({
           data: requests,
-        })
-        );
+        }));
     }
     
 

@@ -239,10 +239,16 @@ const Users = () => {
     {
       Header: 'Identity document',
       accessor: 'identityDocURL',
+      Cell: ({row}) => (
+        row.original.identityDocURL ? <a href={row.original.identityDocURL} target='_blank' rel="noreferrer">Open File</a> : null
+      ),
     },
     {
       Header: 'Disability document',
       accessor: 'disabCertURL',
+      Cell: ({row}) => (
+        row.original.disabCertURL ? <a href={row.original.disabCertURL} target='_blank' rel="noreferrer">Open File</a> : null
+      ),
     },
     
   ];
