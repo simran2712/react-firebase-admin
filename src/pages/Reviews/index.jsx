@@ -114,7 +114,7 @@ const Reviews = () => {
 
   const columns = [
     {
-      Header: 'uid',
+      Header: useFormatMessage('Reviews.uid'),
       accessor: 'uid',
       Cell: ({ row }) => (
         <small className="has-text-grey is-abbr-like">
@@ -127,7 +127,7 @@ const Reviews = () => {
       accessor: 'rating',
       Cell: ({ row }) => (
         <small className="has-text-grey is-abbr-like">
-          {`${row.original.rating.value}`}
+          {row.original.rating}
         </small>
       ),
     },
