@@ -103,6 +103,15 @@ const Requests = () => {
     //   ),
     // },
     {
+      Header: useFormatMessage('Requests.uid'),
+      accessor: 'User ID',
+      Cell: ({ row }) => (
+        <small className="has-text-grey is-abbr-like">
+          {row.original.uid}
+        </small>
+      ),
+    },
+    {
       Header: useFormatMessage('Requests.examAddress'),
       accessor: 'Exam Address',
       Cell: ({ row }) => (
