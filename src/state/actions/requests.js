@@ -79,7 +79,7 @@ export const fetchRequests = (requestId = '') => {
     let requests;
 
     try {
-        requests = await fetchCollection('requests');
+        requests = await fetchCollection('requests', { sort: {attribute: 'dateSlot', order: 'desc'}});
     } catch (error) {
       /* eslint-disable no-console */
       console.log("error fetching request collec, ", error);
